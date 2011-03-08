@@ -1,0 +1,1 @@
+<input type="<?php echo $this->type ?>" value="" name="<?php echo $this->name ?>" />
