@@ -7,7 +7,12 @@ class presenter_backend_Login extends presenter_Presenter {
     }
 
     protected function _defaultAction() {
-        $this->view->bind('form', $this->createForm());
+        $form = $this->createForm();
+        $this->view->bind('form', $form);
+        if($form->processForm()) {
+            $values = & $form->getValues();
+            
+        }
     }
 
     protected function _initialize() {
@@ -16,7 +21,9 @@ class presenter_backend_Login extends presenter_Presenter {
 
     protected function createForm() {
         $form = new form_Form('login');
-        $form->addItem(new form_item_Text('username',_('Username')));
+        $form->addItem(new form_item_Text('username', 'jméno', _('Username')));
+        $form->addItem(new form_item_Password('password', 'password', _('Password')));
+        $form->addItem(new form_item_Submit('submit', _('Login')));
         return $form;
     }
 
