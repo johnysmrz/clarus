@@ -2,11 +2,26 @@
 
 abstract class form_Item {
 
+    /**
+     * HTML typ inputu, musi byt definovan v setUp metode potomka
+     * @var string
+     */
     protected $type = NULL;
+    /**
+     * Nazev inputu
+     * @var string
+     */
     protected $name = NULL;
+    /**
+     * Label inputu
+     * @var string
+     */
     protected $label = NULL;
+    /**
+     * Instance nadrazeneho formulare
+     * @var form_Form
+     */
     protected $form = NULL;
-    protected $id = NULL;
     protected $defaultValue = NULL;
     protected $value = NULL;
 
@@ -41,6 +56,27 @@ abstract class form_Item {
         if (!($this->form instanceof form_Form)) {
             throw new LogicException('Standalone item cannot be processed', 1);
         }
+        switch ($this->form->getMethod()) {
+            case 'get':
+                if (isset($_GET['form'][$this->form->getName()][$this->getName()])) {
+                    $this->value = $_GET['form'][$this->form->getName()][$this->getName()];
+                    return TRUE;
+                } else {
+                    return FALSE;
+                }
+
+                break;
+            case 'post':
+                if (isset($_POST['form'][$this->form->getName()][$this->getName()])) {
+                    $this->value = $_POST['form'][$this->form->getName()][$this->getName()];
+                    return TRUE;
+                } else {
+                    return FALSE;
+                }
+                break;
+            default:
+                throw new LogicException('Unknown form method', 1);
+        }
     }
 
     abstract protected function setup();
@@ -59,6 +95,10 @@ abstract class form_Item {
 
     public function display($return = FALSE) {
         include(PATH_TPL . '/system/form/item.php');
+    }
+
+    public function getValue() {
+        return $this->value;
     }
 
 }
