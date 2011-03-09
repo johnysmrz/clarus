@@ -19,16 +19,28 @@ abstract class form_Item {
 
     final public function setForm(form_Form $form) {
         $this->form = $form;
-        $this->createName();
-        $this->createId();
     }
 
-    final private function createName() {
-        $this->name = 'form[' . $this->form->getName() . '][' . $this->name . ']';
+    final private function getHtmlName() {
+        if ($this->form instanceof form_Form) {
+            return 'form[' . $this->form->getName() . '][' . $this->getName() . ']';
+        } else {
+            return $this->getName();
+        }
     }
 
-    final private function createId() {
-        $this->id = 'form_' . $this->form->getName() . '_' . $this->id;
+    final private function getHtmlId() {
+        if ($this->form instanceof form_Form) {
+            return 'form_' . $this->form->getName() . '_' . $this->getName();
+        } else {
+            return $this->getHtmlName();
+        }
+    }
+
+    public function processItem() {
+        if (!($this->form instanceof form_Form)) {
+            
+        }
     }
 
     abstract protected function setup();
