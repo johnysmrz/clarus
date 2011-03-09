@@ -39,7 +39,7 @@ abstract class form_Item {
 
     public function processItem() {
         if (!($this->form instanceof form_Form)) {
-            
+            throw new LogicException('Standalone item cannot be processed', 1);
         }
     }
 
