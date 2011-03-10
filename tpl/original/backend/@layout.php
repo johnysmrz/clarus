@@ -12,7 +12,7 @@
                 <div id="searchBox">
                     <input type="text" id="searchText" />
                 </div>
-                <a href="/admin/logout" id="logout"></a>
+                <a href="/admin/auth/logout" id="logout"></a>
             </div>
         </div>
         <div id="mainBox">
