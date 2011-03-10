@@ -1,9 +1,9 @@
 <?php
 
-class presenter_backend_Login extends presenter_Presenter {
+class presenter_backend_Auth extends presenter_Presenter {
 
-    protected function _deInitialize() {
-
+    protected function _initialize() {
+        View::getInstance()->setLayoutTpl(PATH_TPL . '/backend/@loginLayout.php');
     }
 
     protected function _defaultAction() {
@@ -13,13 +13,21 @@ class presenter_backend_Login extends presenter_Presenter {
             $values = & $form->getValues();
             $autentificator = new security_BackendAutentificator($values['username'], $values['password']);
             $user = security_autentification_User::autentificate($autentificator);
-            echo '<pre>' . print_r($user, true) . '</pre>';
-            Application::redir('/admin/default');
+            if (isset($_GET['requested'])) {
+                Application::redir(base64_decode($_GET['requested']));
+            } else {
+                Application::redir('/admin/default');
+            }
         }
     }
 
-    protected function _initialize() {
-        View::getInstance()->setLayoutTpl(PATH_TPL . '/backend/@loginLayout.php');
+    protected function _loginAction() {
+        $this->_defaultAction();
+    }
+
+    protected function _logoutAction() {
+        security_autentification_User::logout();
+        Application::redir('/admin/auth/login');
     }
 
     protected function createForm() {
@@ -28,6 +36,10 @@ class presenter_backend_Login extends presenter_Presenter {
         $form->addItem(new form_item_Password('password', 'password', _('Password')));
         $form->addItem(new form_item_Submit('submit', _('Login')));
         return $form;
+    }
+
+    protected function _deInitialize() {
+
     }
 
 }
