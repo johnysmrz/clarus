@@ -9,11 +9,6 @@
  * @author Jan "Johny" Smrz
  */
 class security_autentification_User extends object_Static {
-
-    const IAnonymousUser = 'security_autentification_IAnonymousUser';
-
-    
-
     /**
      * @var IUser
      */
@@ -28,8 +23,11 @@ class security_autentification_User extends object_Static {
             return self::$userObject;
         }
 
-        if (isset($_SESSION['_user']) && ($user = unserialize($_SESSION['_user'])) instanceof $interface) {
-            return self::$userObject = $user;
+        if (isset($_SESSION['_user'])) {
+            $user = unserialize($_SESSION['_user']);
+            if ($user instanceof security_autentification_IUser) {
+                return self::$userObject = $user;
+            }
         }
 
         throw new security_autentification_Exception('Not autorized', 1);
@@ -42,7 +40,7 @@ class security_autentification_User extends object_Static {
      */
     public static function autentificate(security_autentification_IAutentificator $autentificator) {
         if ($autentificator->isAutentificate()) {
-            if (($user = $autentificator->getUserObject()) instanceof security_autentification_IUser) {
+            if (($user = $autentificator->getUser()) instanceof security_autentification_IUser) {
                 self::$userObject = $user;
                 $_SESSION['_user'] = serialize($user);
                 return $user;
