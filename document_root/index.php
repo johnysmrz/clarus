@@ -3,7 +3,7 @@
 include_once('../init.php');
 
 try {
-    DB::connect('pgsql','localhost','test','postgres','pass');
+    DB::connect('pgsql', 'localhost', 'test', 'postgres', 'pass');
 
     Application::addRouote(new router_Backend('admin'));
     Application::addRouote(new router_DB());
@@ -13,7 +13,11 @@ try {
 
     Application::display();
 } catch (security_autentification_Exception $sae) {
-    Application::redir('/admin/login');
+    if (isset($_GET['requested'])) {
+        Application::redir('/admin/auth/login?requested=' . $_GET['requested']);
+    } else {
+        Application::redir('/admin/auth/login?requested=' . base64_encode($_SERVER['REQUEST_URI']));
+    }
 } catch (Exception $e) {
     Debugger::showException($e);
 }
