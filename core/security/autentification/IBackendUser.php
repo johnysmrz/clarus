@@ -3,6 +3,6 @@
 /**
  * Interface definujici backend uzivatele
  */
-interface secuirty_autentification_IBackendUser {
+interface security_autentification_IBackendUser extends security_autentification_IUser {
     
 }

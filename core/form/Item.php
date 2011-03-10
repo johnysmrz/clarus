@@ -67,6 +67,7 @@ abstract class form_Item {
 
                 break;
             case 'post':
+                //var_dump($_POST);
                 if (isset($_POST['form'][$this->form->getName()][$this->getName()])) {
                     $this->value = $_POST['form'][$this->form->getName()][$this->getName()];
                     return TRUE;
