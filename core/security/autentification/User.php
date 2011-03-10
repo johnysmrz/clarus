@@ -56,7 +56,7 @@ class security_autentification_User extends object_Static {
      * Provede odhlaseni uzivatele, zrusi session i vnitrni vazby
      */
     public static function logout() {
-        unset(self::$userObject);
+        self::$userObject = NULL;
         unset($_SESSION['_user']);
     }
 
