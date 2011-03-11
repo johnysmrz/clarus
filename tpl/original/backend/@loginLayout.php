@@ -7,6 +7,9 @@
         <title>admin - login</title>
     </head>
     <body>
-        <?php echo $this->getTplVar('form')->display() ?>
+        <div id="loginBox">
+            <object id="loginClarusLogo" data="/img/admin/clarus.svg" codetype="image/svg+xml" style="width: 150px;"></object>
+            <?php echo $this->getTplVar('form')->display() ?>
+        </div>
     </body>
 </html>
