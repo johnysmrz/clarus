@@ -24,5 +24,5 @@ abstract class presenter_Presenter {
     abstract protected function _initialize();
 
     abstract protected function _deInitialize();
-
+    
 }

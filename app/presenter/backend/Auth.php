@@ -32,8 +32,8 @@ class presenter_backend_Auth extends presenter_Presenter {
 
     protected function createForm() {
         $form = new form_Form('login', 'post');
-        $form->addItem(new form_item_Text('username', 'jméno', _('Username')));
-        $form->addItem(new form_item_Password('password', 'password', _('Password')));
+        $form->addItem(new form_item_Text('username', NULL, _('Username')));
+        $form->addItem(new form_item_Password('password', NULL, _('Password')));
         $form->addItem(new form_item_Submit('submit', _('Login')));
         return $form;
     }

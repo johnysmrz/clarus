@@ -9,8 +9,15 @@ class Application {
     protected static $presenter = NULL;
     protected static $action = NULL;
     protected static $param = NULL;
+    protected static $locale = NULL;
 
     public static function run() {
+        self::setupLocale();
+
+        if (defined('GETTEXT_USE') && GETTEXT_USE === TRUE) {
+            self::initGettext();
+        }
+
         if (($router = self::getRouter()) instanceof router_Router) {
             $presenter = self::$presenter = $router->getPresenter();
             $action = self::$action = $router->getAction();
@@ -21,7 +28,7 @@ class Application {
             $param = self::$param = self::$defaultParam;
         }
 
-        $presenter = 'presenter_'.$presenter;
+        $presenter = 'presenter_' . $presenter;
         $action = $action === NULL ? $action = 'default' : $action;
 
         //echo '<pre>' . print_r(array('presenter'=>$presenter, 'action'=>$action, 'param'=>$param), true) . '</pre>';
@@ -52,15 +59,33 @@ class Application {
     }
 
     public static function display() {
-        View::getInstance()->setContentTpl(PATH_TPL.'/'.View::createTemplateName(self::$presenter, self::$action).'.php');
+        View::getInstance()->setContentTpl(PATH_TPL . '/' . View::createTemplateName(self::$presenter, self::$action) . '.php');
         View::getInstance()->display();
     }
 
+    /**
+     * Pomocna fce
+     * Provede presmerovani pomoci hlavicky
+     * @param string $url
+     */
     public static function redir($url) {
-        header('Location: '.$url);
+        header('Location: ' . $url);
         exit();
     }
 
-}
+    /**
+     * Nastavi prostredi pro gettext
+     */
+    protected static function initGettext() {
+        bindtextdomain("messages", PATH . '/locale');
+        textdomain("messages");
+    }
 
-?>
+    protected static function setupLocale() {
+        $locale = i18n_Locale::getInstance();
+        if (isset($_GET['setlocale'])) {
+            $locale->setLocale($_GET['setlocale']);
+        }
+    }
+
+}
