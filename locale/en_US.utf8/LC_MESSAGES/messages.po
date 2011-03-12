@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-11 08:25+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jan Smrz <jan-smrz@jan-smrz.cz>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: /home/johny/htdocs/game.dev\n"
+"X-Poedit-SearchPath-0: /home/johny/htdocs/game.dev\n"
+
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:35
+msgid "Username"
+msgstr "Username"
+
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:36
+msgid "Password"
+msgstr "Password"
+
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:37
+msgid "Login"
+msgstr "Login"
+
+#: /home/johny/htdocs/game.dev/core/Application.php:82
+msgid "Cant set locale"
+msgstr "Can't set locale"
+
+#: /home/johny/htdocs/game.dev/core/object/Singleton.php:12
+msgid "Singleton canot be cloned"
+msgstr "Singleton canot be cloned"
+
+#: /home/johny/htdocs/game.dev/core/object/Static.php:12
+msgid "Static object canot be instantied"
+msgstr "Static object canot be instantied"
+
+#: /home/johny/htdocs/game.dev/document_root/index.php:8
+msgid "test text"
+msgstr "bla bla"
+

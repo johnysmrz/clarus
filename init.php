@@ -19,8 +19,13 @@ define('PATH_APP',PATH.$ini['enviroment']['app_path']);
 
 define('FORM_PREFIX',$ini['enviroment']['form_prefix']);
 define('URL',$ini['enviroment']['base_url']);
-define('LANG',$ini['enviroment']['lang']);
 
+define('DEFAULT_LOCALE', $ini['enviroment']['default_locale']);
+
+// podpora pro gettext
+if(isset($ini['gettext'])) {
+    define('GETTEXT_USE', ($ini['gettext']['use'] == 'TRUE' ? TRUE : FALSE));
+}
 
 function __autoload($class) {
 	$pathParts = explode('_',$class);

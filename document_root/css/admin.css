@@ -33,6 +33,10 @@ body {
     background-color: #f5f5f4;
 }
 
+.gradient {
+    background: -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
+}
+
 /* --- top box --- */
 
 #topBox {
@@ -184,7 +188,6 @@ ul#mainMenu > li > ul > li > a > span {
     margin: 150px auto 0px auto;
     width: 320px;
     padding: 10px;
-    background: -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
 }
 
 #loginClarusLogo {
