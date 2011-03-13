@@ -12,7 +12,7 @@ class form_item_Select extends form_Item {
     }
 
     public function  display($return = FALSE) {
-        include(PATH_TPL . '/system/form/select.php');
+        include(templater_Templater::get(PATH_TPL . '/system/form/select.php'));
     }
 
 }

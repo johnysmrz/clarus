@@ -38,7 +38,7 @@ class form_Form implements IDisplayable {
      * @param bool $return
      */
     public function display($return = FALSE) {
-        include(PATH_TPL . '/system/form/form.php');
+        include(templater_Templater::get(PATH_TPL . '/system/form/form.php'));
     }
 
     /**

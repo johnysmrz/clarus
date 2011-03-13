@@ -11,6 +11,7 @@ class presenter_backend_Auth extends presenter_Presenter {
         $this->view->bind('form', $form);
         if ($form->processForm()) {
             $values = & $form->getValues();
+            i18n_Locale::getInstance()->setLocale($values['lang']);
             $autentificator = new security_BackendAutentificator($values['username'], $values['password']);
             $user = security_autentification_User::autentificate($autentificator);
             if (isset($_GET['requested'])) {

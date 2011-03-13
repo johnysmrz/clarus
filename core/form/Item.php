@@ -102,7 +102,7 @@ abstract class form_Item {
     }
 
     public function display($return = FALSE) {
-        include(PATH_TPL . '/system/form/item.php');
+        include(templater_Templater::get(PATH_TPL . '/system/form/item.php'));
     }
 
     public function getValue() {

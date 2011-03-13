@@ -1,6 +1,6 @@
 <?php
 
-class View {
+class View implements IDisplayable {
 
     private static $instance = null;
     protected $variables = array();
@@ -9,7 +9,7 @@ class View {
     protected $templater = null;
 
     final private function __construct() {
-        $this->templater = new templater_Templater();
+        
     }
 
     /**
@@ -42,7 +42,7 @@ class View {
     }
 
     public function display() {
-        include_once($this->templater->getCompiledTemplate($this->layoutTpl));
+        include_once(templater_Templater::get($this->layoutTpl));
         return $this;
     }
 
