@@ -1,47 +1,80 @@
 <?php
 
 /**
- * Description of Templater
- *
- * @author johny
+ * Sablonovac, popis chybi :)
+ * @author Jan Smrz
+ * @package core
  */
-class templater_Templater {
+class templater_Templater extends object_Singleton {
 
-    public function __construct() {
-        
+    protected static $instance = NULL;
+
+    /**
+     * get instance
+     * @return templater_Templater
+     */
+    protected static function getInstance() {
+        if(!(self::$instance instanceof self)) {
+            return self::$instance = new self();
+        }
+        return self::$instance;
     }
 
-    public function getCompiledTemplate($originalFileName) {
+    /**
+     * konstruktor je tu pouze z duvodu aby nesel zavolat zvenku
+     */
+    protected function __construct() {
+
+    }
+
+    /**
+     * Vrati cestu ke zkompilovane sablone v pripade potreby provede rekompilaci
+     * @param string $originalFileName
+     * @return string
+     */
+    public static function get($originalFileName) {
         if (!file_exists($originalFileName)) throw new scl_FileNotFoundException($originalFileName);
         $originalFileName = realpath($originalFileName);
 
-        $compiledFileName = $this->getCompiledFileName($originalFileName);
+        $compiledFileName = self::getCompiledFileName($originalFileName);
 
         if (file_exists($compiledFileName)) {
             $originalFileMTime = filemtime($originalFileName);
             $compiledFileMTime = filemtime($compiledFileName);
             if ($originalFileMTime !== $compiledFileMTime) {
-                $this->compileTemplate($originalFileName);
+                self::getInstance()->compileTemplate($originalFileName);
             }
         } else {
-            $this->compileTemplate($originalFileName);
+            self::getInstance()->compileTemplate($originalFileName);
         }
 
         return $compiledFileName;
     }
 
+    /**
+     * Vraci cestu k cache zkompilovane sablony
+     * @param string $originalFileName
+     * @return string
+     */
+    protected static function getCompiledFileName($originalFileName) {
+        $cacheFolder = PATH_CACHE.'/tpl/'.i18n_Locale::getInstance()->getLocale();
+        if(!file_exists($cacheFolder)) {
+            mkdir($cacheFolder, 0777, TRUE);
+        }
+        return $cacheFolder . '/' . md5($originalFileName);
+    }
+
+    /**
+     * Zkompiluje a ulozi sablonu do cache
+     * @param <type> $originalFileName
+     */
     protected function compileTemplate($originalFileName) {
         if (!file_exists($originalFileName)) throw new scl_FileNotFoundException($originalFileName);
         $templateContent = file_get_contents($originalFileName);
-        $compiledFileName = $this->getCompiledFileName($originalFileName);
+        $compiledFileName = self::getCompiledFileName($originalFileName);
         $templateContent = $this->parser($templateContent);
-        //trigger_error('Compiling: '.$originalFileName, E_USER_NOTICE);
         touch($originalFileName);
         file_put_contents($compiledFileName, $templateContent);
-    }
-
-    protected function getCompiledFileName($originalFileName) {
-        return PATH_TPL_C . '/' . md5($originalFileName);
     }
 
     protected function parser($content) {
@@ -54,9 +87,8 @@ class templater_Templater {
         if (preg_match('~^\$([a-zA-Z0-9_-]+)$~', $token, $matches)) {
             $newToken = '<?php echo $this->getTplVar(\'' . $matches[1] . '\') ?>';
         } else if ($token == 'content') {
-            $newToken = '<?php include_once($this->templater->getCompiledTemplate($this->contentTpl)) ?>';
+            $newToken = '<?php include(templater_Templater::get($this->contentTpl)) ?>';
         }
-
         return $newToken;
     }
 

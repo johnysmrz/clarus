@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-11 08:25+0100\n"
+"POT-Creation-Date: 2011-03-13 07:46+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jan Smrz <jan-smrz@jan-smrz.cz>\n"
 "Language-Team: \n"
@@ -13,20 +13,24 @@ msgstr ""
 "X-Poedit-SearchPath-0: /home/johny/htdocs/game.dev\n"
 
 #: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:35
-msgid "Username"
+msgid "username"
 msgstr "Username"
 
 #: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:36
-msgid "Password"
+msgid "password"
 msgstr "Password"
 
-#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:37
-msgid "Login"
-msgstr "Login"
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:40
+msgid "cesky"
+msgstr "czech"
 
-#: /home/johny/htdocs/game.dev/core/Application.php:82
-msgid "Cant set locale"
-msgstr "Can't set locale"
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:41
+msgid "anglicky"
+msgstr "english"
+
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:46
+msgid "login"
+msgstr "Login"
 
 #: /home/johny/htdocs/game.dev/core/object/Singleton.php:12
 msgid "Singleton canot be cloned"
@@ -36,7 +40,8 @@ msgstr "Singleton canot be cloned"
 msgid "Static object canot be instantied"
 msgstr "Static object canot be instantied"
 
-#: /home/johny/htdocs/game.dev/document_root/index.php:8
-msgid "test text"
-msgstr "bla bla"
+#~ msgid "Cant set locale"
+#~ msgstr "Can't set locale"
+#~ msgid "test text"
+#~ msgstr "bla bla"
 
