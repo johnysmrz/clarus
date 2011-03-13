@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: clarus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-13 07:44+0100\n"
+"POT-Creation-Date: 2011-03-13 19:21+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jan Smrz <jan-smrz@jan-smrz.cz>\n"
 "Language-Team: \n"
@@ -14,23 +14,23 @@ msgstr ""
 "X-Poedit-Basepath: /home/johny/htdocs/game.dev\n"
 "X-Poedit-SearchPath-0: /home/johny/htdocs/game.dev\n"
 
-#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:35
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:36
 msgid "username"
 msgstr "Uživatelské jméno"
 
-#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:36
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:37
 msgid "password"
 msgstr "Heslo"
 
-#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:40
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:41
 msgid "cesky"
 msgstr "česky"
 
-#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:41
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:42
 msgid "anglicky"
 msgstr "anglicky"
 
-#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:46
+#: /home/johny/htdocs/game.dev/app/presenter/backend/Auth.php:47
 msgid "login"
 msgstr "Přihlásit"
 
@@ -41,6 +41,10 @@ msgstr "Singleton nesmi byt klonován"
 #: /home/johny/htdocs/game.dev/core/object/Static.php:12
 msgid "Static object canot be instantied"
 msgstr "Statický objekt nemůže být instantiován"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:2
+msgid "Users"
+msgstr "Uživatelé"
 
 #~ msgid "test text"
 #~ msgstr "testovaci text"

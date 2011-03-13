@@ -2,6 +2,7 @@
 
 /**
  * Sablonovac, popis chybi :)
+ * @todo upravit na pluginy
  * @author Jan Smrz
  * @package core
  */
@@ -14,7 +15,7 @@ class templater_Templater extends object_Singleton {
      * @return templater_Templater
      */
     protected static function getInstance() {
-        if(!(self::$instance instanceof self)) {
+        if (!(self::$instance instanceof self)) {
             return self::$instance = new self();
         }
         return self::$instance;
@@ -33,7 +34,8 @@ class templater_Templater extends object_Singleton {
      * @return string
      */
     public static function get($originalFileName) {
-        if (!file_exists($originalFileName)) throw new scl_FileNotFoundException($originalFileName);
+        if (!file_exists($originalFileName))
+            throw new scl_FileNotFoundException($originalFileName);
         $originalFileName = realpath($originalFileName);
 
         $compiledFileName = self::getCompiledFileName($originalFileName);
@@ -57,8 +59,8 @@ class templater_Templater extends object_Singleton {
      * @return string
      */
     protected static function getCompiledFileName($originalFileName) {
-        $cacheFolder = PATH_CACHE.'/tpl/'.i18n_Locale::getInstance()->getLocale();
-        if(!file_exists($cacheFolder)) {
+        $cacheFolder = PATH_CACHE . '/tpl/' . i18n_Locale::getInstance()->getLocale();
+        if (!file_exists($cacheFolder)) {
             mkdir($cacheFolder, 0777, TRUE);
         }
         return $cacheFolder . '/' . md5($originalFileName);
@@ -69,25 +71,31 @@ class templater_Templater extends object_Singleton {
      * @param <type> $originalFileName
      */
     protected function compileTemplate($originalFileName) {
-        if (!file_exists($originalFileName)) throw new scl_FileNotFoundException($originalFileName);
+        if (!file_exists($originalFileName))
+            throw new scl_FileNotFoundException($originalFileName);
         $templateContent = file_get_contents($originalFileName);
         $compiledFileName = self::getCompiledFileName($originalFileName);
         $templateContent = $this->parser($templateContent);
-        touch($originalFileName);
+        //touch($originalFileName);
         file_put_contents($compiledFileName, $templateContent);
     }
 
     protected function parser($content) {
-        return preg_replace_callback('~\{([a-zA-Z0-9_ $]+)\}~', array($this, 'resolveToken'), $content);
+        return preg_replace_callback('~\{([a-zA-Z0-9_ $\/]+)\}~', array($this, 'resolveToken'), $content);
     }
 
     protected function resolveToken($token) {
         $token = $token[1];
         $newToken = $token;
-        if (preg_match('~^\$([a-zA-Z0-9_-]+)$~', $token, $matches)) {
+        preg_match('~^(?<decisive>[a-zA-Z]+|[\/\$_])(?<first>[a-zA-Z]+| |)(?<params>[a-zA-Z0-9 ]*)~', $token, $matches);
+        if ('$' == $matches['decisive']) {
             $newToken = '<?php echo $this->getTplVar(\'' . $matches[1] . '\') ?>';
-        } else if ($token == 'content') {
+        } else if ('content' == $matches['decisive']) {
             $newToken = '<?php include(templater_Templater::get($this->contentTpl)) ?>';
+        } else if('_' == $matches['decisive'] && ' ' == $matches['first']) {
+            $newToken = templater_Gettext::getInstance()->resolveString($matches['params']);
+        } else {
+            return $token;
         }
         return $newToken;
     }

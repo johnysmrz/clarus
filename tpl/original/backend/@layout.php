@@ -35,7 +35,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a class="users" href="/admin/tree">Users<span>správa uživatelů, jejich skupin, oprávnění a přístupů</span></a>
+                                <a class="users" href="/admin/tree">{_ Users}<span>správa uživatelů, jejich skupin, oprávnění a přístupů</span></a>
                                 <ul>
                                     <li><a href="/admin/tree/overview">Přehled<span>prehled stromu stranek</span></a></li>
                                     <li><a href="/admin/tree/new">Nový<span>přidat nový lístek</span></a></li>
@@ -53,6 +53,7 @@
                 </div>
                 <div id="contentBox">
                     <div class="inner">
+                        {funkce}
                         {content}
                     </div>
                 </div>
