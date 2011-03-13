@@ -32,9 +32,18 @@ class presenter_backend_Auth extends presenter_Presenter {
 
     protected function createForm() {
         $form = new form_Form('login', 'post');
-        $form->addItem(new form_item_Text('username', NULL, _('Username')));
-        $form->addItem(new form_item_Password('password', NULL, _('Password')));
-        $form->addItem(new form_item_Submit('submit', _('Login')));
+        $form->addItem(new form_item_Text('username', array(form_Item::LABEL => _('username'))));
+        $form->addItem(new form_item_Password('password', array(form_Item::LABEL => _('password'))));
+        $form->addItem(new form_item_Select('lang',
+                array(
+                    form_Item::SELECT_OPTIONS => array(
+                        'cs_CZ.utf8' => 'česky ('._('cesky').')',
+                        'en_US.utf8' => 'english ('._('anglicky').')'
+                    ),
+                    form_Item::DEFAULT_VALUE => i18n_Locale::getInstance()->getLocale()
+                )
+        ));
+        $form->addItem(new form_item_Submit('submit', array(form_Item::DEFAULT_VALUE => _('login'))));
         return $form;
     }
 
