@@ -1,6 +1,9 @@
 <?php
 
 abstract class form_Item {
+    const DEFAULT_VALUE = 1;
+    const LABEL = 2;
+    const SELECT_OPTIONS = 3;
 
     /**
      * HTML typ inputu, musi byt definovan v setUp metode potomka
@@ -25,18 +28,22 @@ abstract class form_Item {
     protected $defaultValue = NULL;
     protected $value = NULL;
 
-    final public function __construct($name, $defaultValue = NULL, $label = NULL) {
-        $this->setup();
+    final public function __construct($name, $options = NULL) {
+        $this->setup($options);
         $this->id = $this->name = $name;
-        $this->label = $label;
-        $this->value = $defaultValue;
+        if (isset($options[self::DEFAULT_VALUE])) {
+            $this->value = $options[self::DEFAULT_VALUE];
+        }
+        if (isset($options[self::LABEL])) {
+            $this->label = $options[self::LABEL];
+        }
     }
 
     final public function setForm(form_Form $form) {
         $this->form = $form;
     }
 
-    final private function getHtmlName() {
+    final public function getHtmlName() {
         if ($this->form instanceof form_Form) {
             return 'form[' . $this->form->getName() . '][' . $this->getName() . ']';
         } else {
@@ -44,7 +51,7 @@ abstract class form_Item {
         }
     }
 
-    final private function getHtmlId() {
+    final public function getHtmlId() {
         if ($this->form instanceof form_Form) {
             return 'form_' . $this->form->getName() . '_' . $this->getName();
         } else {
@@ -80,7 +87,7 @@ abstract class form_Item {
         }
     }
 
-    abstract protected function setup();
+    abstract protected function setup($options = NULL);
 
     public function getType() {
         return $this->type;
