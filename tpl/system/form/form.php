@@ -1,4 +1,4 @@
-<form action="<?php echo $this->action ?>" method="<?php echo $this->method ?>">
+<form action="{$action}" method="{$method}">
     <table>
         <?php foreach ($this->items as $name => $item): ?>
             <tr>

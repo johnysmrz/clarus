@@ -37,8 +37,31 @@ class form_Form implements IDisplayable {
      * Zobrazi formular, implementace rozhrani IDisplayable
      * @param bool $return
      */
-    public function display($return = FALSE) {
-        include(templater_Templater::get(PATH_TPL . '/system/form/form.php'));
+    public function display($template = NULL) {
+        include(templater_Templater::get(PATH_TPL . (($template == NULL) ? '/system/form/form.php' : $template)));
+    }
+
+    /**
+     * Vraci promenou
+     * @param mixed $name
+     */
+    public function getTplVar($name) {
+        switch ($name) {
+            case 'name':
+                return $this->name;
+                break;
+            case 'method':
+                return $this->method;
+                break;
+            case 'action':
+                return $this->action;
+                break;
+            case 'values':
+                return $this->values;
+                break;
+            default:
+                throw new InvalidArgumentException('Tpl var ['.$name.'] not known', 1);
+        }
     }
 
     /**
@@ -73,7 +96,7 @@ class form_Form implements IDisplayable {
     public function processForm($item = NULL) {
         $status = TRUE;
         foreach ($this->items as $name => $item) {
-            if($item->processItem() === FALSE) {
+            if ($item->processItem() === FALSE) {
                 $status = FALSE;
             }
             $this->values[$name] = $item->getValue();

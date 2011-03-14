@@ -4,7 +4,7 @@
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <link rel="StyleSheet" href="/css/admin.css" type="text/css" media="screen"></link>
         <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
-        <title>admin - login</title>
+        <title>{_ login to administration}</title>
     </head>
     <body>
         <div id="loginBox" class="gradient">

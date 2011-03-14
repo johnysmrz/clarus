@@ -41,16 +41,17 @@ class View implements IDisplayable {
         return $this;
     }
 
-    public function display() {
+    public function display($template = NULL) {
         include_once(templater_Templater::get($this->layoutTpl));
         return $this;
     }
 
-    protected function getTplVar($name) {
-        if (isset($this->variables[$name]))
+    public function getTplVar($name) {
+        if (isset($this->variables[$name])) {
             return $this->variables[$name];
-        else
-            return '';
+        } else {
+            throw new InvalidArgumentException('Unknown var ['.$name.']', 1);
+        }
     }
 
     public static function createTemplateName($presenter,$action = NULL,$param = NULL) {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-13 19:21+0100\n"
+"POT-Creation-Date: 2011-03-13 20:11+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jan Smrz <jan-smrz@jan-smrz.cz>\n"
 "Language-Team: \n"
@@ -43,6 +43,14 @@ msgstr "Static object canot be instantied"
 #: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:2
 msgid "Users"
 msgstr "Users"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:3
+msgid "login to administration"
+msgstr "Login into administration"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:4
+msgid "administration"
+msgstr "Administration"
 
 #~ msgid "Cant set locale"
 #~ msgstr "Can't set locale"

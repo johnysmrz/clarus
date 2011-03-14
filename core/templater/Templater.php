@@ -89,7 +89,7 @@ class templater_Templater extends object_Singleton {
         $newToken = $token;
         preg_match('~^(?<decisive>[a-zA-Z]+|[\/\$_])(?<first>[a-zA-Z]+| |)(?<params>[a-zA-Z0-9 ]*)~', $token, $matches);
         if ('$' == $matches['decisive']) {
-            $newToken = '<?php echo $this->getTplVar(\'' . $matches[1] . '\') ?>';
+            $newToken = '<?php echo $this->getTplVar(\'' . $matches['first'] . '\') ?>';
         } else if ('content' == $matches['decisive']) {
             $newToken = '<?php include(templater_Templater::get($this->contentTpl)) ?>';
         } else if('_' == $matches['decisive'] && ' ' == $matches['first']) {
