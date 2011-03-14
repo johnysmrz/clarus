@@ -50,13 +50,17 @@ body {
     width: 1000px;
 }
 
-#topBox > div.inner > a {
-    display: block;
-    width: 48px;
-    height: 48px;
-    background:  url("/img/admin/logout.png") top right no-repeat;
-    float: right;
-    margin-right:  700px;
+#userInfoBox {
+    padding: 15px 0px;
+    font-size: 70%;
+    width: 250px;
+    color: white;
+}
+
+#userInfoBox > a, #userInfoBox > a:hover {
+    color: white;
+    font-weight: bold;
+    font-size: 80%;
 }
 
 /* --- search box --- */
