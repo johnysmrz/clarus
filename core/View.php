@@ -50,7 +50,7 @@ class View implements IDisplayable {
         if (isset($this->variables[$name])) {
             return $this->variables[$name];
         } else {
-            throw new InvalidArgumentException('Unknown var ['.$name.']', 1);
+            return '';
         }
     }
 
