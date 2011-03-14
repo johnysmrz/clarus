@@ -6,7 +6,7 @@ class security_BackendAutentificator implements security_autentification_IAutent
 
     public function __construct($username, $password) {
         if ($username == 'admin' && $password == 'pass') {
-            $this->user = new security_BackendUser();
+            $this->user = new security_BackendUser($username);
         }
     }
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: clarus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-13 20:11+0100\n"
+"POT-Creation-Date: 2011-03-14 15:16+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jan Smrz <jan-smrz@jan-smrz.cz>\n"
 "Language-Team: \n"
@@ -43,17 +43,40 @@ msgid "Static object canot be instantied"
 msgstr "Statický objekt nemůže být instantiován"
 
 #: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:2
-msgid "Users"
-msgstr "Uživatelé"
-
-#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:3
-msgid "login to administration"
-msgstr "Přihlášení do administrace"
-
-#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:4
 msgid "administration"
 msgstr "Administrace"
 
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:3
+msgid "Users"
+msgstr "Uživatelé"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:4
+msgid "users agenda, rights, acces privilegies and groups"
+msgstr "uživatelé, jejich práva a skupiny"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:5
+msgid "Setting"
+msgstr "Nastavení"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:6
+msgid "global application setting"
+msgstr "globální nastavení aplikace"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:7
+msgid "login to administration"
+msgstr "Přihlášení do administrace"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:8
+msgid "Logged as"
+msgstr "Přihlášen jako"
+
+#: /home/johny/htdocs/game.dev/cache/tpl/gettextDictionaryHelper.php:9
+msgid "Logout"
+msgstr "Odhlásit se"
+
+#, fuzzy
+#~ msgid "administration} - {$pageTitle"
+#~ msgstr "Administrace"
 #~ msgid "test text"
 #~ msgstr "testovaci text"
 
