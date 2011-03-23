@@ -3,6 +3,9 @@
 include_once('../init.php');
 
 try {
+    new loader_App();
+
+    echo '<pre>' . print_r(spl_autoload_functions(), true) . '</pre>';
     //DB::connect('pgsql', 'localhost', 'test', 'postgres', 'pass');
 
     Application::addRouote(new router_Backend('admin'));

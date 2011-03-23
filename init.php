@@ -27,16 +27,17 @@ if(isset($ini['gettext'])) {
     define('GETTEXT_USE', ($ini['gettext']['use'] == 'TRUE' ? TRUE : FALSE));
 }
 
+// zakladni autloadovaci fce pro jadro, pro moduly a aplikaci se pouzivaji loader_* objekty
 function __autoload($class) {
 	$pathParts = explode('_',$class);
         $coreClass = PATH_CORE.'/'.implode('/',$pathParts).'.php';
-        $appClass = PATH_APP.'/'.implode('/',$pathParts).'.php';
         if(file_exists($coreClass)) {
             include_once($coreClass);
-        } else if(file_exists($appClass)) {
-            include_once($appClass);
         }
 }
+
+// kdyz se pouzije spl dojde k prepsani fce autoload je nutne vynutit si ji do zasobniku
+spl_autoload_register('__autoload');
 
 function CErrorHander($errno, $errstr) {
     switch ($errno) {
