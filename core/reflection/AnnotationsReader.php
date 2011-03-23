@@ -66,7 +66,7 @@ class reflection_AnnotationsReader extends object_Singleton {
         if (isset($this->annotations[$name])) {
             return $this->annotations[$name];
         } else {
-            throw new InvalidArgumentException("Annotation [$name] not found", 1);
+            throw new UnexpectedValueException("Annotation [$name] not found", 1);
         }
     }
 
