@@ -1,6 +1,7 @@
 <?php
 
 class Application {
+    const defaultConnection = '__default__connection__';
 
     protected static $router = array();
     protected static $defaultPresenter = NULL;
@@ -10,6 +11,7 @@ class Application {
     protected static $action = NULL;
     protected static $param = NULL;
     protected static $locale = NULL;
+    protected static $connectors = array();
 
     public static function run() {
         self::setupLocale();
@@ -85,6 +87,40 @@ class Application {
         $locale = i18n_Locale::getInstance();
         if (isset($_GET['setlocale'])) {
             $locale->setLocale($_GET['setlocale']);
+        }
+    }
+
+    /**
+     * Prida do kontextu aplikace nove spojeni
+     * @param IConnectable $connector instance connectoru spojeni
+     * @param string $name pojmenovani spojeni pro budouci pouziti
+     * @param bool $default
+     */
+    public static function setConnection(IConnectable $connector, $name = NULL) {
+        if ($name !== NULL) {
+            self::$connectors[$name] = $connector;
+        } else {
+            self::$connectors[self::defaultConnection] = $connector;
+        }
+    }
+
+    /**
+     * Vraci vytvorene pojmenovane spojeni
+     * @param string $name
+     * @return IConnectable
+     */
+    public static function getConnection($name = NULL) {
+        if ($name === NULL) {
+            return self::$connectors[self::defaultConnection];
+        } else {
+            if (isset(self::$connectors[$name])) {
+                if (!self::$connectors[$name]->checkConnection()) {
+                    self::$connectors[$name]->connect();
+                }
+                return self::$connectors[$name];
+            } else {
+                throw new InvalidArgumentException('Connection ' . $name . ' not exists', 1);
+            }
         }
     }
 
