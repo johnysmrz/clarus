@@ -1,10 +1,14 @@
 <?php
 
-class loader_App extends loader_Abstract {
+namespace clarus\loader;
 
-    final public function __construct() {
-        parent::__construct();
-    }
+/**
+ * Loader for app classes
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage loader
+ */
+class App extends Loader {
 
     protected function load($class) {
         $pathParts = explode('_',$class);
