@@ -1,5 +1,7 @@
 <?php
 
+namespace clarus;
+
 /**
  * Interface pro komponenty ktere lze predat do view a pote zobrazit
  */

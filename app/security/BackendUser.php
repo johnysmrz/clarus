@@ -1,6 +1,6 @@
 <?php
 
-class security_BackendUser implements security_autentification_IBackendUser {
+class security_BackendUser implements \clarus\security\autentification\IBackendUser {
 
     protected $username = NULL;
 

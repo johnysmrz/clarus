@@ -13,7 +13,7 @@
                     <input type="text" id="searchText" />
                 </div>
                 <div id="userInfoBox">
-                    {_ Logged as}: <?php echo security_autentification_User::get('secuirty_autentification_IBackendUser')->getUsername(); ?>
+                    {_ Logged as}: <?php echo \clarus\security\autentification\User::get('secuirty_autentification_IBackendUser')->getUsername(); ?>
                     (<a id="userLogout" href="/admin/auth/logout">{_ Logout}</a>)
                 </div>
             </div>
@@ -22,7 +22,7 @@
             <div id="midBox">
                 <div id="menuBox">
                     <div class="inner">
-                        <?php include_once(templater_Templater::get(PATH_TPL.'/backend/menu.php')) ?>
+                        <?php include_once(\clarus\templater\Templater::get(PATH_TPL.'/backend/menu.php')) ?>
                     </div>
                 </div>
                 <div id="contentBox">

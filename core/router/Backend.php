@@ -1,14 +1,34 @@
 <?php
 
-class router_Backend extends router_Router {
+namespace clarus\router;
 
+/**
+ * Backend router, simply translate adress after $base to router, action and id
+ * ex.: /admin/router/action/id
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage router
+ */
+class Backend extends Router {
+
+    /**
+     * @var string
+     */
     protected $base = NULL;
 
-    public function __construct($base = 'admin', $flags = NULL) {
+    /**
+     * Constructor
+     * @param string $base
+     * @param array $flags
+     */
+    public function __construct($base = 'admin', $flags = array()) {
         $this->base = $base;
         parent::__construct($flags);
     }
 
+    /**
+     * @return bool
+     */
     public function match() {
         if (isset($_SERVER['REDIRECT_URL'])) {
             $parts = explode('/', trim($_SERVER['REDIRECT_URL'], '/'));
@@ -27,5 +47,4 @@ class router_Backend extends router_Router {
             }
         }
     }
-
 }

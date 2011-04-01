@@ -1,11 +1,14 @@
 <?php
 
+namespace clarus\i18n;
+
 /**
  * Description of Geoip
  * @author Jan Smrz
- * @package i18n
+ * @package clarus
+ * @subpackage i18n
  */
-class i18n_Geoip {
+class Geoip {
 
     /**
      * @var string IP adress given in constructor or retrieved from $_SERVER['REMOTE_ADDR']

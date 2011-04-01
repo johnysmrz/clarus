@@ -1,6 +1,16 @@
 <?php
 
-class router_Simple extends router_Router {
+namespace clarus\router;
+
+
+/**
+ * Simple router is able to match presenter, method and id by pattern
+ * Inspired by nette router
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage router
+ */
+class Simple extends Router {
 
     protected $pattern = NULL;
 

@@ -1,6 +1,11 @@
 <?php
 
-class router_DB extends router_Router {
+namespace clarus\router;
+
+/**
+ * @todo
+ */
+class DB extends Router {
 
     public function match() {
 

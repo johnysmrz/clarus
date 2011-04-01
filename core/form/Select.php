@@ -1,6 +1,8 @@
 <?php
 
-class form_item_Select extends form_Item {
+namespace clarus\form;
+
+class Select extends Item {
 
     protected $selectOptions = array();
 
@@ -12,7 +14,7 @@ class form_item_Select extends form_Item {
     }
 
     public function  display($return = FALSE) {
-        include(templater_Templater::get(PATH_TPL . '/system/form/select.php'));
+        include(\clarus\templater\Templater::get(PATH_TPL . '/system/form/select.php'));
     }
 
 }

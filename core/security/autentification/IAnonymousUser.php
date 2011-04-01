@@ -1,8 +1,13 @@
 <?php
 
+namespace clarus\security\autentification;
+
 /**
- * Interface definujici anonymniho uzivatele
+ * Defines role of anonymous user
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage security
  */
-interface security_autentification_IAnonymousUser extends security_autentification_IUser {
+interface IAnonymousUser extends IUser {
     
 }

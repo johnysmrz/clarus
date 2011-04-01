@@ -1,6 +1,8 @@
 <?php
 
-abstract class form_Item {
+namespace clarus\form;
+
+abstract class Item {
     const DEFAULT_VALUE = 1;
     const LABEL = 2;
     const SELECT_OPTIONS = 3;
@@ -39,12 +41,12 @@ abstract class form_Item {
         }
     }
 
-    final public function setForm(form_Form $form) {
+    final public function setForm(Form $form) {
         $this->form = $form;
     }
 
     final public function getHtmlName() {
-        if ($this->form instanceof form_Form) {
+        if ($this->form instanceof Form) {
             return 'form[' . $this->form->getName() . '][' . $this->getName() . ']';
         } else {
             return $this->getName();
@@ -52,7 +54,7 @@ abstract class form_Item {
     }
 
     final public function getHtmlId() {
-        if ($this->form instanceof form_Form) {
+        if ($this->form instanceof Form) {
             return 'form_' . $this->form->getName() . '_' . $this->getName();
         } else {
             return $this->getHtmlName();
@@ -60,7 +62,7 @@ abstract class form_Item {
     }
 
     public function processItem() {
-        if (!($this->form instanceof form_Form)) {
+        if (!($this->form instanceof Form)) {
             throw new LogicException('Standalone item cannot be processed', 1);
         }
         switch ($this->form->getMethod()) {
@@ -102,7 +104,7 @@ abstract class form_Item {
     }
 
     public function display($return = FALSE) {
-        include(templater_Templater::get(PATH_TPL . '/system/form/item.php'));
+        include(\clarus\templater\Templater::get(PATH_TPL . '/system/form/item.php'));
     }
 
     public function getValue() {

@@ -1,12 +1,15 @@
 <?php
 
+namespace clarus\templater;
+
 /**
  * Sablonovac, popis chybi :)
  * @todo upravit na pluginy
  * @author Jan Smrz
- * @package core
+ * @package clarus
+ * @subpackage templater
  */
-class templater_Templater extends object_Singleton {
+class Templater extends \clarus\scl\SingletonObject {
 
     protected static $instance = NULL;
 
@@ -35,7 +38,7 @@ class templater_Templater extends object_Singleton {
      */
     public static function get($originalFileName) {
         if (!file_exists($originalFileName))
-            throw new scl_FileNotFoundException($originalFileName);
+            throw new \clarus\scl\FileNotFoundException($originalFileName);
         $originalFileName = realpath($originalFileName);
 
         $compiledFileName = self::getCompiledFileName($originalFileName);
@@ -59,7 +62,7 @@ class templater_Templater extends object_Singleton {
      * @return string
      */
     protected static function getCompiledFileName($originalFileName) {
-        $cacheFolder = PATH_CACHE . '/tpl/' . i18n_Locale::getInstance()->getLocale();
+        $cacheFolder = PATH_CACHE . '/tpl/' . \clarus\i18n\Locale::getInstance()->getLocale();
         if (!file_exists($cacheFolder)) {
             mkdir($cacheFolder, 0777, TRUE);
         }
@@ -72,7 +75,7 @@ class templater_Templater extends object_Singleton {
      */
     protected function compileTemplate($originalFileName) {
         if (!file_exists($originalFileName))
-            throw new scl_FileNotFoundException($originalFileName);
+            throw new \clarus\scl\FileNotFoundException($originalFileName);
         $templateContent = file_get_contents($originalFileName);
         $compiledFileName = self::getCompiledFileName($originalFileName);
         $templateContent = $this->parser($templateContent);
@@ -91,9 +94,9 @@ class templater_Templater extends object_Singleton {
         if ('$' == $matches['decisive']) {
             $newToken = '<?php echo $this->getTplVar(\'' . $matches['first'] . '\') ?>';
         } else if ('content' == $matches['decisive']) {
-            $newToken = '<?php include(templater_Templater::get($this->contentTpl)) ?>';
+            $newToken = '<?php include(\clarus\templater\Templater::get($this->contentTpl)) ?>';
         } else if('_' == $matches['decisive'] && ' ' == $matches['first']) {
-            $newToken = templater_Gettext::getInstance()->resolveString($matches['params']);
+            $newToken = \clarus\templater\Gettext::getInstance()->resolveString($matches['params']);
         } else {
             return $token;
         }

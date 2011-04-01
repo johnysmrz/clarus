@@ -1,6 +1,8 @@
 <?php
 
-class BasicException extends Exception {
+namespace clarus;
+
+class Exception extends \Exception {
 	
 	protected $data = null;
 	
