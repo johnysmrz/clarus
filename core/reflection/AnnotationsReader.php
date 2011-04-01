@@ -1,5 +1,7 @@
 <?php
 
+namespace clarus\reflection;
+
 /*
  * @package main
  * @SimpleAnnotation
@@ -11,14 +13,14 @@
  */
 
 /**
- * Trida pro cteni anotaci
- * Zvlada vsechny inline anotace vcetne doc komentu, viz priklad vyse
- * Generuje anotace vcetne typovosti
+ * Annotation reader class
+ * Is able to handle all inline annotations as shown above
+ * Generates output variables including its types
  * @author Jan Smrz
  * @package reflection
- * @throws InvalidArgumentException
+ * @throws \InvalidArgumentException
  */
-class reflection_AnnotationsReader extends object_Singleton {
+class AnnotationsReader extends \clarus\scl\SingletonObject {
 
     private static $pool = array();
     protected $annotations = array();
@@ -40,7 +42,7 @@ class reflection_AnnotationsReader extends object_Singleton {
             return self::$pool['class'][$class];
         } else {
             $reflector = new ReflectionClass($class);
-            return self::$pool['class'][$class] = new reflection_AnnotationsReader($reflector->getDocComment());
+            return self::$pool['class'][$class] = new AnnotationsReader($reflector->getDocComment());
         }
     }
 
@@ -57,8 +59,8 @@ class reflection_AnnotationsReader extends object_Singleton {
         if (isset(self::$pool['methods'][$class][$method])) {
             return self::$pool['methods'][$class][$method];
         } else {
-            $reflector = new ReflectionMethod($class, $method);
-            return self::$pool['methods'][$class][$method] = new reflection_AnnotationsReader($reflector->getDocComment());
+            $reflector = new \ReflectionMethod($class, $method);
+            return self::$pool['methods'][$class][$method] = new AnnotationsReader($reflector->getDocComment());
         }
     }
 
@@ -66,7 +68,7 @@ class reflection_AnnotationsReader extends object_Singleton {
         if (isset($this->annotations[$name])) {
             return $this->annotations[$name];
         } else {
-            throw new UnexpectedValueException("Annotation [$name] not found", 1);
+            throw new \UnexpectedValueException("Annotation [$name] not found", 1);
         }
     }
 

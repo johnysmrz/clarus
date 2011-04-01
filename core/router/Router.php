@@ -1,9 +1,14 @@
 <?php
 
+namespace clarus\router;
+
 /**
- * 
+ * Basic class for all future routers
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage routers
  */
-abstract class router_Router {
+abstract class Router {
 
     protected $flags = NULL;
     private $presenter = NULL;
@@ -17,7 +22,7 @@ abstract class router_Router {
     abstract public function match();
 
     final public function getPresenter() {
-        if($this->presenter === NULL) throw new LogicException ('Presenter not defined', 1);
+        if ($this->presenter === NULL) throw new \LogicException('Presenter not defined', 1);
         return $this->presenter;
     }
 

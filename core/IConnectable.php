@@ -1,5 +1,7 @@
 <?php
 
+namespace clarus;
+
 /**
  * Rozhrani pro vsechny konektory
  */

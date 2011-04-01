@@ -1,6 +1,8 @@
 <?php
 
-class form_item_Password extends form_Item {
+namespace clarus\form;
+
+class Password extends Item {
 
     protected function setup($options = NULL) {
         $this->type = 'password';

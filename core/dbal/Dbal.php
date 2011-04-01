@@ -1,9 +1,14 @@
 <?php
 
+namespace clarus\dbal;
+
 /**
- * Abstraktni trida pro pripojeni k DB
+ * Abstract class for all future DB connections
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage dbal
  */
-abstract class dbal_Abstract implements IConnectable {
+abstract class Dbal implements \clarus\IConnectable {
 
     /**
      * @var PDO

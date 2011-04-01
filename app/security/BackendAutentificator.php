@@ -1,6 +1,6 @@
 <?php
 
-class security_BackendAutentificator implements security_autentification_IAutentificator {
+class security_BackendAutentificator implements clarus\security\autentification\IAutentificator {
 
     protected $user = NULL;
 
@@ -15,7 +15,7 @@ class security_BackendAutentificator implements security_autentification_IAutent
     }
 
     public function isAutentificate() {
-        if ($this->user instanceof security_autentification_IBackendUser) {
+        if ($this->user instanceof \clarus\security\autentification\IBackendUser) {
             return TRUE;
         } else {
             return FALSE;

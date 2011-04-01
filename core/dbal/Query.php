@@ -1,6 +1,11 @@
 <?php
 
-class dbal_Query implements Countable {
+namespace clarus\dbal;
+
+/**
+ * @todo
+ */
+class Query implements \Countable {
 
     /**
      * @var PDOStatement

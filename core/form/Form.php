@@ -1,11 +1,14 @@
 <?php
 
+namespace clarus\form;
+
 /**
- * Defaultni trida pro generovani formulare
+ * Default form class
  * @author Jan Smrz
- * @package form
+ * @package clarus
+ * @subpackage form
  */
-class form_Form implements IDisplayable {
+class Form implements \clarus\IDisplayable {
 
     protected $name = NULL;
     protected $items = array();
@@ -28,7 +31,7 @@ class form_Form implements IDisplayable {
      * Prida polozku do formulare
      * @param form_Item $item
      */
-    public function addItem(form_Item $item) {
+    public function addItem(Item $item) {
         $this->items[$item->getName()] = $item;
         $item->setForm($this);
     }
@@ -38,7 +41,7 @@ class form_Form implements IDisplayable {
      * @param bool $return
      */
     public function display($template = NULL) {
-        include(templater_Templater::get(PATH_TPL . (($template == NULL) ? '/system/form/form.php' : $template)));
+        include(\clarus\templater\Templater::get(PATH_TPL . (($template == NULL) ? '/system/form/form.php' : $template)));
     }
 
     /**
@@ -60,7 +63,7 @@ class form_Form implements IDisplayable {
                 return $this->values;
                 break;
             default:
-                throw new InvalidArgumentException('Tpl var ['.$name.'] not known', 1);
+                throw new \InvalidArgumentException('Tpl var ['.$name.'] not known', 1);
         }
     }
 

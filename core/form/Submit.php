@@ -1,6 +1,8 @@
 <?php
 
-class form_item_Submit extends form_Item {
+namespace clarus\form;
+
+class Submit extends Item {
 
     protected function setup($options = NULL) {
         $this->type = 'submit';

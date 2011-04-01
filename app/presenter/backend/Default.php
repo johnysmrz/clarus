@@ -1,6 +1,6 @@
 <?php
 
-class presenter_backend_Default extends presenter_Backend {
+class presenter_backend_Default extends \clarus\presenter\Backend {
 
     protected function  _defaultAction() {
         //echo '<pre>' . print_r('default', true) . '</pre>';

@@ -1,3 +1,7 @@
 <?php
 
-class presenter_Exception extends BasicException {};
+namespace clarus\presenter;
+
+class Exception extends \clarus\Exception {
+
+};

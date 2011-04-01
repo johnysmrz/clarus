@@ -1,5 +1,12 @@
 <?php
 
-class security_autentification_Exception extends BasicException {
+namespace clarus\security\autentification;
+
+/**
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage security
+ */
+class Exception extends \clarus\Exception {
     
 }

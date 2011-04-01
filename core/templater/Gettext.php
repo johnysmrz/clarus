@@ -1,6 +1,8 @@
 <?php
 
-class templater_Gettext extends object_Singleton {
+namespace clarus\templater;
+
+class Gettext extends \clarus\scl\SingletonObject {
 
     protected static $instance = NULL;
     protected $gettextDictionaryHelper;

@@ -1,5 +1,7 @@
 <?php
 
+namespace clarus;
+
 class View implements IDisplayable {
 
     private static $instance = null;
@@ -42,7 +44,7 @@ class View implements IDisplayable {
     }
 
     public function display($template = NULL) {
-        include_once(templater_Templater::get($this->layoutTpl));
+        include_once(templater\Templater::get($this->layoutTpl));
         return $this;
     }
 

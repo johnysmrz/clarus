@@ -1,11 +1,7 @@
 <?php
 
 /**
- * class Log provides logging errors etc to log files
- * @version 0.1
- * @author Jan "Johny" Smrz
- * @copyright GNU/GPLv3 read licence.txt
- * @package core
+ * @todo PREDELAT!
  */
 class Log {
 	

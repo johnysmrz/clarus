@@ -1,10 +1,14 @@
 <?php
 
+namespace clarus\i18n;
+
 /**
  * Trida pro manipulaci s lokalizacnimi udaji
- * @author johny
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage i18n
  */
-class i18n_Locale extends object_Singleton {
+class Locale extends \clarus\scl\SingletonObject {
 
     private $locale = NULL;
     private static $instance = NULL;
@@ -14,12 +18,12 @@ class i18n_Locale extends object_Singleton {
      * @return i18n_Locale
      */
     public static function getInstance() {
-        if (self::$instance instanceof i18n_Locale) {
+        if (self::$instance instanceof self) {
             return self::$instance;
-        } elseif (isset($_SESSION['_locale']) && (($locale = unserialize($_SESSION['_locale'])) instanceof i18n_Locale)) {
+        } elseif (isset($_SESSION['_locale']) && (($locale = unserialize($_SESSION['_locale'])) instanceof self)) {
             return self::$instance = $locale;
         } else {
-            return self::$instance = new i18n_Locale();
+            return self::$instance = new self();
         }
     }
 

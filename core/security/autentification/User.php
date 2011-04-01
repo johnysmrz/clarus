@@ -1,14 +1,17 @@
 <?php
 
+namespace clarus\security\autentification;
+
 /**
- * Factory vracejici objekt prihlaseneho uzivatele, v pripade ze jej nelze najit
- * vyhazuje exception
- * @throws security_autentification_Exception
- * @throws UnexpectedValueException
- * @version 1.0
- * @author Jan "Johny" Smrz
+ * Factory returning object of currently logged user
+ * @throws Exception
+ * @throws \UnexpectedValueException
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage security
  */
-class security_autentification_User extends object_Static {
+class User extends \clarus\scl\StaticObject {
+
     /**
      * @var IUser
      */
@@ -25,12 +28,12 @@ class security_autentification_User extends object_Static {
 
         if (isset($_SESSION['_user'])) {
             $user = unserialize($_SESSION['_user']);
-            if ($user instanceof security_autentification_IUser) {
+            if ($user instanceof IUser) {
                 return self::$userObject = $user;
             }
         }
 
-        throw new security_autentification_Exception('Not autorized', 1);
+        throw new Exception('Not autorized', 1);
     }
 
     /**
@@ -38,17 +41,17 @@ class security_autentification_User extends object_Static {
      * @param IAutentificator $autentificator
      * @return IUser
      */
-    public static function autentificate(security_autentification_IAutentificator $autentificator) {
+    public static function autentificate(IAutentificator $autentificator) {
         if ($autentificator->isAutentificate()) {
-            if (($user = $autentificator->getUser()) instanceof security_autentification_IUser) {
+            if (($user = $autentificator->getUser()) instanceof IUser) {
                 self::$userObject = $user;
                 $_SESSION['_user'] = serialize($user);
                 return $user;
             } else {
-                throw new UnexpectedValueException('security_autentification_IAutentificator->getUserObject() should return security_autentification_IUser object', 1);
+                throw new \UnexpectedValueException(__NAMESPACE__ . 'IAutentificator->getUserObject() should return ' . __NAMESPACE__ . 'IUser object', 1);
             }
         } else {
-            throw new security_autentification_Exception('Not autorized', 1);
+            throw new Exception('Not autorized', 1);
         }
     }
 

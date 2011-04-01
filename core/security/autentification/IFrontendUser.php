@@ -1,8 +1,13 @@
 <?php
 
+namespace clarus\security\autentification;
+
 /**
- * Interface definujici frontend uzivatele
+ * Defines frontend user role
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage security
  */
-interface security_autentification_IFrontendUser extends security_autentification_IUser {
+interface IFrontendUser extends IUser {
     
 }
