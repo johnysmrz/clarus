@@ -3,6 +3,7 @@
 namespace clarus;
 
 include_once('../init.php');
+include_once('../core/_loader.php');
 
 try {
     new loader\App();

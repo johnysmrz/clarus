@@ -38,22 +38,3 @@ function __autoload($class) {
 // kdyz se pouzije spl dojde k prepsani fce autoload je nutne vynutit si ji do zasobniku
 spl_autoload_register('__autoload');
 // az sem to bude vymazano
-
-
-include_once(PATH_CORE.'/loader/Loader.php');
-include_once(PATH_CORE.'/loader/Core.php');
-new clarus\loader\Core();
-
-
-
-function CErrorHander($errno, $errstr) {
-    switch ($errno) {
-        case E_NOTICE:
-            echo '<pre>' . print_r($errstr, true) . '</pre>';
-            break;
-        default:
-            throw new \clarus\scl\ErrorException($errstr, $errno);
-    }
-}
-
-set_error_handler('CErrorHander');
