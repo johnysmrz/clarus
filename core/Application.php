@@ -7,15 +7,21 @@ namespace clarus;
  */
 class Application {
     const defaultConnection = '__default__connection__';
+    const HTTP_RESPONSE_OK = 'HTTP/1.1 200 OK';
+    const HTTP_RESPONSE_NOT_FOUND = 'HTTP/1.0 404 Not Found';
 
     protected static $router = array();
-    
     protected static $presenter = NULL;
     protected static $action = NULL;
     protected static $param = NULL;
-
     protected static $locale = NULL;
     protected static $connectors = array();
+    protected static $httpResponseCode = NULL;
+
+    /**
+     * @var IErrorPresenter
+     */
+    protected static $errorPresenter = NULL;
 
     public static function run() {
         self::setupLocale();
@@ -28,14 +34,22 @@ class Application {
             $presenter = self::$presenter = $router->getPresenter();
             $action = self::$action = $router->getAction();
             $param = self::$param = $router->getParam();
+        } else if(self::$errorPresenter instanceof presenter\IErrorPresenter) {
+            $presenter = self::$errorPresenter;
+            $action = '404';
+        } else {
+            $presenter = NULL;
         }
 
+
         $presenter = 'presenter_' . $presenter;
-        if(class_exists($presenter)) {
+        if (class_exists($presenter)) {
             $action = $action === NULL ? $action = 'default' : $action;
             $p = new $presenter($action, $param);
+            self::$httpResponseCode = self::HTTP_RESPONSE_OK;
+        } else {
+            self::$httpResponseCode = self::HTTP_RESPONSE_NOT_FOUND;
         }
-                
     }
 
     public static function addRouote(router\Router $router) {
@@ -55,8 +69,16 @@ class Application {
     }
 
     public static function display() {
-        View::getInstance()->setContentTpl(PATH_TPL . '/' . View::createTemplateName(self::$presenter, self::$action) . '.php');
-        View::getInstance()->display();
+        \header('X-Powered-By: PHP/' . phpversion() . '; Clarus-Framework/' . CLARUS_VERSION);
+        \header(self::$httpResponseCode);
+        if (self::$httpResponseCode == self::HTTP_RESPONSE_OK) {
+            \clarus\View::getInstance()->setContentTpl(PATH_TPL . '/' . View::createTemplateName(self::$presenter, self::$action) . '.php');
+            \clarus\View::getInstance()->display();
+        } else {
+            // default error page
+            self::flushDefaultErrorPage();
+            exit ();
+        }
     }
 
     /**
@@ -118,6 +140,19 @@ class Application {
         }
     }
 
-    //protected static function generateError
+    public static function flushDefaultErrorPage() {
+        ?>
+        <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+        <html><head>
+                <title><?php echo self::$httpResponseCode ?></title>
+            </head><body>
+                <h1><?php echo self::$httpResponseCode ?></h1>
+                <p><?php echo _('The requested URL was not found on this server.') ?></p>
+                <hr>
+                <?php echo $_SERVER['SERVER_SIGNATURE'] ?>
+                <address>Clarus Framework Application <?php echo CLARUS_VERSION ?></address>
+            </body></html>        
+        <?php
+    }
 
 }
