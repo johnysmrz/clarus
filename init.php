@@ -26,15 +26,3 @@ define('DEFAULT_LOCALE', $ini['enviroment']['default_locale']);
 if (isset($ini['gettext'])) {
     define('GETTEXT_USE', ($ini['gettext']['use'] == 'TRUE' ? TRUE : FALSE));
 }
-
-// cele tohle bude odstraneno az se nanamespacuje jadro
-function __autoload($class) {
-    $pathParts = explode('_', $class);
-    $coreClass = PATH_CORE . '/' . implode('/', $pathParts) . '.php';
-    if (file_exists($coreClass)) {
-        include_once($coreClass);
-    }
-}
-// kdyz se pouzije spl dojde k prepsani fce autoload je nutne vynutit si ji do zasobniku
-spl_autoload_register('__autoload');
-// az sem to bude vymazano
