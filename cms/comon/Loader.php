@@ -2,7 +2,7 @@
 
 namespace cms;
 
-class Loader extends \clarus\loader\Loader implements \Serializable {
+class Loader extends \clarus\loader\Loader {
 
     protected $cache = array();
     protected $phpFiles = array();
@@ -15,11 +15,14 @@ class Loader extends \clarus\loader\Loader implements \Serializable {
     }
 
     protected function onCreate() {
-        if(\file_exists(\PATH_CACHE.'/cmsLoader.cache')) {
-            
-        }
-        echo '<pre>' . print_r(\PATH_CACHE, true) . '</pre>';
+        $cacheFile = \PATH_CACHE . '/cmsLoader.cache';
         $this->createCache();
+        /* if(\file_exists($cacheFile)) {
+          $this->classes = \unserialize(\file_get_contents($cacheFile));
+          } else {
+          $this->createCache();
+          \file_put_contents($cacheFile, \serialize($this->classes));
+          } */
     }
 
     protected function createCache() {
@@ -33,9 +36,10 @@ class Loader extends \clarus\loader\Loader implements \Serializable {
                 }
                 if ($token[0] == \T_CLASS) {
                     $className = $tokens[$key + 2][1];
-                    if ($namespace === \NULL) {
+                    if ($namespace === NULL) {
                         $this->classes[$className] = $filePath;
                     } else {
+                        $this->classes['\\'.$namespace . '\\' . $className] = $filePath;
                         $this->classes[$namespace . '\\' . $className] = $filePath;
                     }
                 }
@@ -54,14 +58,6 @@ class Loader extends \clarus\loader\Loader implements \Serializable {
             }
         }
         return;
-    }
-
-    public function serialize() {
-
-    }
-
-    public function unserialize($serialized) {
-        
     }
 
 }
