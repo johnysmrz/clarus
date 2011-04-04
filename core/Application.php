@@ -41,8 +41,6 @@ class Application {
             $presenter = NULL;
         }
 
-
-        $presenter = 'presenter_' . $presenter;
         if (class_exists($presenter)) {
             $action = $action === NULL ? $action = 'default' : $action;
             $p = new $presenter($action, $param);
