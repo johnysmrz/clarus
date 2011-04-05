@@ -24,12 +24,14 @@ class View implements IDisplayable {
             return self::$instance = new View();
     }
 
+    /**
+     * Bidn variable into view
+     * @param string $name
+     * @param mixed $value
+     * @return View
+     */
     public function bind($name, $value) {
-        if(is_scalar($value) || $value instanceof IDisplayable) {
-            $this->variables[$name] = $value;
-        } else {
-            throw new InvalidArgumentException('Value must be scalar or instance of IDisplayable', 1);
-        }
+        $this->variables[$name] = $value;
         return $this;
     }
 
@@ -58,7 +60,7 @@ class View implements IDisplayable {
 
     public static function createTemplateName($presenter,$action = NULL,$param = NULL) {
         if($action === NULL) $action = 'default';
-        $pathParts = explode('_', strtolower($presenter));
+        $pathParts = explode('\\', strtolower($presenter));
         $pathParts[] = $action;
         return implode('/', $pathParts);
     }
