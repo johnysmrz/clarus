@@ -9,21 +9,21 @@ namespace clarus\presenter;
  * @subpackage presenter
  */
 abstract class Presenter {
-
     /*
-     * @param View
+     * @param \clarus\View
      */
     protected $view = NULL;
 
-    final public function  __construct($action = NULL, $param = NULL) {
+    final public function __construct($action = NULL, $param = NULL) {
         $this->view = \clarus\View::getInstance();
-        if($action === NULL) $action = 'default';
-        if(method_exists($this, '_'.$action.'Action')) {
+        if ($action === NULL)
+            $action = 'default';
+        if (method_exists($this, '_' . $action . 'Action')) {
             $this->_initialize();
-            $this->{'_'.$action.'Action'}($param);
+            $this->{'_' . $action . 'Action'}($param);
             $this->_deInitialize();
         } else {
-            throw new Exception('Action ['.$action.'] not exists', 1);
+            throw new Exception('Action [' . $action . '] not exists', 1);
         }
     }
 
@@ -31,6 +31,8 @@ abstract class Presenter {
 
     abstract protected function _initialize();
 
-    abstract protected function _deInitialize();
-    
+    protected function _deInitialize() {
+        
+    }
+
 }
