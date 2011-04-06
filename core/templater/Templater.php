@@ -84,19 +84,21 @@ class Templater extends \clarus\scl\SingletonObject {
     }
 
     protected function parser($content) {
-        return preg_replace_callback('~\{([a-zA-Z0-9 \_\-\,\$]+)\}~', array($this, 'resolveToken'), $content);
+        return preg_replace_callback('~\{([a-zA-Z0-9\ \_\-\,\$\=\/\>]+)\}~', array($this, 'resolveToken'), $content);
     }
 
     protected function resolveToken($token) {
         $token = $token[1];
         $newToken = $token;
-        preg_match('~^(?<decisive>[a-zA-Z]+|[\/\$_])(?<first>[a-zA-Z]+| |)(?<params>[a-zA-Z0-9 \_\-\,\$]*)~', $token, $matches);
+        preg_match('~^(?<decisive>[a-zA-Z]+|[\/\$_])(?<first>[a-zA-Z\>]+| |)(?<params>.*)~', $token, $matches);
         if ('$' == $matches['decisive']) {
             $newToken = '<?php echo $this->getTplVar(\'' . $matches['first'] . '\') ?>';
         } else if ('content' == $matches['decisive']) {
             $newToken = '<?php include(\clarus\templater\Templater::get($this->contentTpl)) ?>';
         } else if('_' == $matches['decisive'] && ' ' == $matches['first']) {
-            $newToken = \clarus\templater\Gettext::getInstance()->resolveString($matches['params']);
+            $newToken = Gettext::getInstance()->resolveString($matches['params']);
+        } else if('foreach' == $matches['decisive'] || ('foreach' == $matches['first'] && '/' == $matches['decisive']) ) {
+            $newToken = ForeachCycle::getInstance()->resolveString($matches);
         } else {
             return $token;
         }
