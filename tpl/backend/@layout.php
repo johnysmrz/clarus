@@ -22,12 +22,12 @@
             <div id="midBox">
                 <div id="menuBox">
                     <div class="inner">
-                        <?php include_once(\clarus\templater\Templater::get(PATH_TPL.'/backend/menu.php')) ?>
+                        {include PATH_TPL.'/backend/menu.php'}
                     </div>
                 </div>
                 <div id="contentBox">
                     <div class="inner">
-                        {content}
+                        {include $this->contentTpl}
                     </div>
                 </div>
             </div>
