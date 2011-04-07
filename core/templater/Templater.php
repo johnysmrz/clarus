@@ -3,7 +3,7 @@
 namespace clarus\templater;
 
 /**
- * Sablonovac, popis chybi :)
+ * Main templating class
  * @todo upravit na pluginy
  * @author Jan Smrz
  * @package clarus
@@ -12,10 +12,11 @@ namespace clarus\templater;
 class Templater extends \clarus\scl\SingletonObject {
 
     protected static $instance = NULL;
+    protected $plugins = array();
 
     /**
      * get instance
-     * @return templater_Templater
+     * @return Templater
      */
     protected static function getInstance() {
         if (!(self::$instance instanceof self)) {
@@ -25,10 +26,16 @@ class Templater extends \clarus\scl\SingletonObject {
     }
 
     /**
-     * konstruktor je tu pouze z duvodu aby nesel zavolat zvenku
+     * Constructor defines basic (internal) plugins
      */
     protected function __construct() {
-
+        //register internal plugins
+        $this->registerPlugin(new ForeachCycle());
+        $this->registerPlugin(new Variable());
+        $this->registerPlugin(new IncludeTemplate());
+        if (\defined('\GETTEXT_USE') && \GETTEXT_USE == TRUE) {
+            $this->registerPlugin(new Gettext());
+        }
     }
 
     /**
@@ -62,11 +69,13 @@ class Templater extends \clarus\scl\SingletonObject {
      * @return string
      */
     protected static function getCompiledFileName($originalFileName) {
+        $cacheFilename = \substr($originalFileName, \strrpos($originalFileName, '/') + 1, 10) . \md5($originalFileName);
+        $cacheFilename = \str_replace(array('.', '@'), '', $cacheFilename);
         $cacheFolder = PATH_CACHE . '/tpl/' . \clarus\i18n\Locale::getInstance()->getLocale();
         if (!file_exists($cacheFolder)) {
             mkdir($cacheFolder, 0777, TRUE);
         }
-        return $cacheFolder . '/' . md5($originalFileName);
+        return $cacheFolder . '/' . $cacheFilename;
     }
 
     /**
@@ -74,8 +83,9 @@ class Templater extends \clarus\scl\SingletonObject {
      * @param <type> $originalFileName
      */
     protected function compileTemplate($originalFileName) {
-        if (!file_exists($originalFileName))
+        if (!file_exists($originalFileName)) {
             throw new \clarus\scl\FileNotFoundException($originalFileName);
+        }
         $templateContent = file_get_contents($originalFileName);
         $compiledFileName = self::getCompiledFileName($originalFileName);
         $templateContent = $this->parser($templateContent);
@@ -84,25 +94,23 @@ class Templater extends \clarus\scl\SingletonObject {
     }
 
     protected function parser($content) {
-        return preg_replace_callback('~\{([a-zA-Z0-9\ \_\-\,\$\=\/\>]+)\}~', array($this, 'resolveToken'), $content);
+        return preg_replace_callback('~\{(?<first>[a-zA-Z0-9_\/]+|\$) ?(?<args>[^}^{\r\n]+)?\}~', array($this, 'resolveToken'), $content);
     }
 
     protected function resolveToken($token) {
-        $token = $token[1];
-        $newToken = $token;
-        preg_match('~^(?<decisive>[a-zA-Z]+|[\/\$_])(?<first>[a-zA-Z\>]+| |)(?<params>.*)~', $token, $matches);
-        if ('$' == $matches['decisive']) {
-            $newToken = '<?php echo $this->getTplVar(\'' . $matches['first'] . '\') ?>';
-        } else if ('content' == $matches['decisive']) {
-            $newToken = '<?php include(\clarus\templater\Templater::get($this->contentTpl)) ?>';
-        } else if('_' == $matches['decisive'] && ' ' == $matches['first']) {
-            $newToken = Gettext::getInstance()->resolveString($matches['params']);
-        } else if('foreach' == $matches['decisive'] || ('foreach' == $matches['first'] && '/' == $matches['decisive']) ) {
-            $newToken = ForeachCycle::getInstance()->resolveString($matches);
-        } else {
-            return $token;
+        if (isset($this->plugins[$token['first']])) {
+            return $this->plugins[$token['first']]->resolve($token['first'], isset($token['args'])?$token['args']:NULL);
         }
-        return $newToken;
+        return $token[0];
+    }
+
+    public function registerPlugin(IPlugin $plugin) {
+        if (!\is_array($plugin->getAbilities())) {
+            throw new \clarus\scl\InvalidReturnException(\get_class($plugin) . '::getAbilities() should return array', 1);
+        }
+        foreach ($plugin->getAbilities() as $ability) {
+            $this->plugins[$ability] = $plugin;
+        }
     }
 
 }

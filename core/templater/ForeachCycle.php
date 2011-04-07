@@ -2,24 +2,12 @@
 
 namespace clarus\templater;
 
-class ForeachCycle extends \clarus\scl\SingletonObject {
+class ForeachCycle implements IPlugin {
 
     protected static $instance = NULL;
 
-    const T_FOREACH = 'foreach';
-    const T_FOREACH_FROM = 'from';
-    const T_FOREACH_KEY = 'key';
-    const T_FOREACH_VALUE = 'value';
-
-    public static function getInstance() {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    public function resolveString($matches) {
-        if($matches[0] === '/foreach') {
+    public function resolve($name, $args) {
+        if($name === '/foreach') {
             return '<?php endforeach; ?>';
         }
 
@@ -27,27 +15,31 @@ class ForeachCycle extends \clarus\scl\SingletonObject {
         $key = NULL;
         $value = NULL;
 
-        foreach(\explode(' ', $matches['params']) as $param) {
+        foreach(\explode(' ', $args) as $param) {
             if(\preg_match('~^([a-z0-9_]+)\=\$([a-z0-9_]+)$~', $param, $paramMatches)) {
                 switch ($paramMatches[1]) {
-                    case self::T_FOREACH_FROM:
+                    case 'from':
                         $from = $paramMatches[2];
                         break;
-                    case self::T_FOREACH_KEY:
+                    case 'key':
                         $key = $paramMatches[2];
                         break;
-                    case self::T_FOREACH_VALUE:
+                    case 'value':
                         $value = $paramMatches[2];
                         break;
                     default:
-                        throw new Exception('Unexcepted param ['.$param.']', 1);
+                        throw new ParserException('Unexcepted param ['.$param.']', 1);
                 }
             } else {
-                throw new Exception('Unexcepted param ['.$param.']', 1);
+                throw new ParserException('Unexcepted param ['.$param.']', 1);
             }
         }
 
         return '<?php foreach($this->getTplVar(\''.$from.'\') as '.(isset($key) ? '$'.$key.'=>' : NULL).' $'.$value.'): ?>';
+    }
+
+    public function getAbilities() {
+        return array('foreach', '/foreach');
     }
 
 }
