@@ -7,10 +7,10 @@
         </ul>
     </li>
     <li>
-        <a class="book" href="/admin/tree">Články<span>přehled článků, správa, zvežejňování a verzování</span></a>
+        <a class="book" href="/admin/article/overview">Články<span>přehled článků, správa, zvežejňování a verzování</span></a>
         <ul>
-            <li><a href="/admin/tree/overview">Přehled<span>prehled stromu stranek</span></a></li>
-            <li><a href="/admin/tree/new">Nový<span>přidat nový lístek</span></a></li>
+            <li><a href="/admin/article/overview">Přehled<span>prehled stromu stranek</span></a></li>
+            <li><a href="/admin/article/new">Nový<span>přidat nový lístek</span></a></li>
         </ul>
     </li>
     <li>
