@@ -2,20 +2,13 @@
 
 namespace clarus\templater;
 
-class Gettext extends \clarus\scl\SingletonObject {
+class Gettext implements IPlugin {
 
     protected static $instance = NULL;
     protected $gettextDictionaryHelper;
     protected $inDictionary = array();
 
-    public static function getInstance() {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    protected function __construct() {
+    public function __construct() {
         $this->gettextDictionaryHelper = PATH_CACHE . '/tpl/gettextDictionaryHelper.php';
         if (!file_exists($this->gettextDictionaryHelper)) {
             file_put_contents($this->gettextDictionaryHelper, '<?php');
@@ -33,7 +26,7 @@ class Gettext extends \clarus\scl\SingletonObject {
         }
     }
 
-    public function resolveString($string) {
+    public function resolve($type, $string) {
         if (!in_array($string, $this->inDictionary)) {
             $this->inDictionary[] = $string;
         }
@@ -48,5 +41,10 @@ class Gettext extends \clarus\scl\SingletonObject {
         $dictionaryContent .= '?>';
         file_put_contents($this->gettextDictionaryHelper, $dictionaryContent);
     }
+
+    public function getAbilities() {
+        return array('_');
+    }
+
 
 }
