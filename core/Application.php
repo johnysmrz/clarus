@@ -6,7 +6,7 @@ namespace clarus;
  * Basic class for running application, should be called only staticaly
  */
 class Application {
-    const defaultConnection = '__default__connection__';
+    const DEFAULT_CONNECTION = '__default__connection__';
     const HTTP_RESPONSE_OK = 'HTTP/1.1 200 OK';
     const HTTP_RESPONSE_NOT_FOUND = 'HTTP/1.0 404 Not Found';
 
@@ -114,7 +114,7 @@ class Application {
         if ($name !== NULL) {
             self::$connectors[$name] = $connector;
         } else {
-            self::$connectors[self::defaultConnection] = $connector;
+            self::$connectors[self::DEFAULT_CONNECTION] = $connector;
         }
     }
 
@@ -125,7 +125,7 @@ class Application {
      */
     public static function getConnection($name = NULL) {
         if ($name === NULL) {
-            return self::$connectors[self::defaultConnection];
+            return self::$connectors[self::DEFAULT_CONNECTION];
         } else {
             if (isset(self::$connectors[$name])) {
                 if (!self::$connectors[$name]->checkConnection()) {
