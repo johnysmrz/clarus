@@ -11,7 +11,7 @@ namespace clarus\dbal;
 abstract class Dbal implements \clarus\IConnectable {
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     protected $connection = NULL;
 
@@ -88,7 +88,7 @@ abstract class Dbal implements \clarus\IConnectable {
      * @return bool
      */
     public function checkConnection() {
-        if($this->connection instanceof PDO) {
+        if($this->connection instanceof \PDO) {
             return TRUE;
         } else {
             return FALSE;
@@ -105,7 +105,7 @@ abstract class Dbal implements \clarus\IConnectable {
         }
         $args = func_get_args();
         array_shift($args);
-        return new dbal_Query($this->connection, $query, $args);
+        return new Query($this->connection, $query, $args);
     }
 
 }

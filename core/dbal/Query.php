@@ -8,7 +8,7 @@ namespace clarus\dbal;
 class Query implements \Countable {
 
     /**
-     * @var PDOStatement
+     * @var \PDOStatement
      */
     protected $statement = NULL;
 
@@ -24,11 +24,11 @@ class Query implements \Countable {
 
     /**
      *
-     * @param PDO $connection
+     * @param \PDO $connection
      * @param string $query
      * @param array $parameters
      */
-    public function __construct(PDO $connection, $query, array $parameters) {
+    public function __construct(\PDO $connection, $query, array $parameters) {
         $this->statement = $connection->prepare($query);
         $this->parameters = $parameters;
     }
@@ -66,7 +66,7 @@ class Query implements \Countable {
      */
     public function fetch() {
         $this->execute();
-        return $this->statement->fetch(PDO::FETCH_ASSOC);
+        return $this->statement->fetch(\PDO::FETCH_ASSOC);
     }
 
 

@@ -10,6 +10,6 @@ namespace clarus\dbal;
  */
 class PgSql extends Dbal implements \clarus\IConnectable {
     public function connect() {
-        $this->connection = new PDO('pgsql:'.$this->createDns(), $this->username, $this->password, $this->options);
+        $this->connection = new \PDO('pgsql:'.$this->createDns(), $this->username, $this->password, $this->options);
     }
 }
