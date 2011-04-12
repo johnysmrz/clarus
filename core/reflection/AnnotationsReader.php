@@ -30,9 +30,9 @@ class AnnotationsReader extends \clarus\scl\SingletonObject {
     }
 
     /**
-     * Cte anotace k tride
+     * Reads annotations from class
      * @param string/object $class
-     * @return reflection_AnnotationsReader
+     * @return AnnotationsReader
      */
     public static function fromClass($class) {
         if (gettype($class) == 'object') {
@@ -47,10 +47,10 @@ class AnnotationsReader extends \clarus\scl\SingletonObject {
     }
 
     /**
-     * Cte anotace k metode tridy
+     * Reads annotations from class method
      * @param string/object $class
      * @param string $method
-     * @return reflection_AnnotationsReader
+     * @return AnnotationsReader
      */
     public static function fromMethod($class, $method) {
         if (gettype($class) == 'object') {
@@ -64,6 +64,39 @@ class AnnotationsReader extends \clarus\scl\SingletonObject {
         }
     }
 
+    /**
+     * Reads annotations from class property
+     * @param string/object $class
+     * @param string $property
+     * @return AnnotationsReader
+     */
+    public static function fromProperty($class, $property) {
+        if (gettype($class) == 'object') {
+            $class = get_class($class);
+        }
+        if (isset(self::$pool['properties'][$class][$property])) {
+            return self::$pool['properties'][$class][$property];
+        } else {
+            $reflector = new \ReflectionProperty($class, $property);
+            return self::$pool['properties'][$class][$property] = new AnnotationsReader($reflector->getDocComment());
+        }
+    }
+
+    /**
+     * Read annotations from given string doc
+     * @param string $doc
+     * @return AnnotationsReader
+     */
+    public static function fromDoc($doc) {
+        return new AnnotationsReader($doc);
+    }
+
+    /**
+     * Get annotation
+     * @param string $name
+     * @return string
+     * @throws \UnexpectedValueException
+     */
     public function __get($name) {
         if (isset($this->annotations[$name])) {
             return $this->annotations[$name];
