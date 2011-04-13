@@ -1,0 +1,9 @@
+<!ELEMENT beans (bean+)>
+<!ELEMENT bean (constructor-arg*)>
+<!ATTLIST bean id ID #REQUIRED>
+<!ATTLIST bean class CDATA #REQUIRED>
+<!ELEMENT constructor-arg (ref?)>
+<!ATTLIST constructor-arg index CDATA #IMPLIED>
+<!ATTLIST constructor-arg value CDATA #REQUIRED>
+<!ELEMENT ref ANY>
+<!ATTLIST ref bean CDATA #REQUIRED>
