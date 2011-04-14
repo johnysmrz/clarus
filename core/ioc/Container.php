@@ -4,9 +4,13 @@ namespace clarus\ioc;
 
 use clarus\reflection\AnnotationsReader as AnnotationsReader;
 
+/**
+ * IOC Container itself
+ * @author Jan Smrz
+ * @package clarus
+ * @subpackage ioc
+ */
 class Container extends \clarus\scl\SingletonObject {
-    const CONF_TYPE_XML = 1;
-    const CONF_TYPE_INI = 2;
 
     /**
      * @var Container
@@ -21,17 +25,20 @@ class Container extends \clarus\scl\SingletonObject {
      */
     private $beans = array();
 
+    /**
+     * Inject beans into given object
+     * @param IInjectable $object
+     * @return IInjectable 
+     */
     public static function inject(IInjectable $object) {
         $i = self::getInstance();
         $objReflector = new \ReflectionClass($object);
-        foreach ($objReflector->getProperties() as $property) {
-            $annotations = AnnotationsReader::fromDoc($property->getDocComment());
+        foreach ($objReflector->getProperties() as $propertyReflector) {
+            $instance = self::getInstance();
             try {
-                $instance = self::getInstance();
-                $beanName = $annotations->IocInejct;
-                $property->setAccessible(TRUE);
-                $property->setValue($object, $instance->getBean($beanName));
-                $property->setAccessible(FALSE);
+                $propertyReflector->setAccessible(TRUE);
+                $propertyReflector->setValue($object, $instance->getBean(AnnotationsReader::fromDoc($propertyReflector->getDocComment())->IocInejct, $object));
+                $propertyReflector->setAccessible(FALSE);
             } catch (\UnexpectedValueException $uev) {
                 continue;
             }
@@ -44,32 +51,45 @@ class Container extends \clarus\scl\SingletonObject {
      */
     protected static function getInstance() {
         if (!(self::$instance instanceof self)) {
-            self::$instance = new self(PATH . '/ioc.xml');
+            self::$instance = new self(PATH_CONF . '/ioc.xml');
         }
         return self::$instance;
     }
 
-    protected function __construct($configuration, $type = self::CONF_TYPE_XML) {
-        switch ($type) {
-            case self::CONF_TYPE_XML:
-                $this->configurator = new XMLConfigurator(\file_get_contents($configuration));
-                break;
-            case self::CONF_TYPE_INI:
-                \trigger_error('Not implemented!', \E_USER_ERROR);
-                break;
+    /**
+     * @param string $configuration path to configuration file
+     */
+    protected function __construct($configuration) {
+        if (\file_exists($configuration)) {
+            $this->configurator = new Configurator(\file_get_contents($configuration));
+        } else {
+            throw new \clarus\scl\FileNotFoundException($configuration);
         }
     }
 
-    protected function getBean($beanName) {
-        if (!isset($this->beans[$beanName])) {
-            $this->beans[$beanName] = $this->createBean($beanName);
+    /**
+     * Get bean object for given combination
+     * @param string $beanName
+     * @param object $object
+     * @return mixed
+     */
+    protected function getBean($beanName, $object) {
+        $configuration = $this->configurator->getConfiguration($beanName, $object);
+        $configurationHash = \md5(\serialize($configuration));
+        if (!isset($this->beans[$configurationHash])) {
+            $this->beans[$configurationHash] = $this->createBean($configuration);
         }
-        return $this->beans[$beanName];
+        return $this->beans[$configurationHash];
     }
 
-    protected function createBean($beanName) {
-        $conf = $this->configurator->getBeanByName($beanName);
-        eval ('$bean = new '.$conf['class'].'("'.  \implode('","', $conf['attributes']).'");');
+    /**
+     * Create new bean from given configuration
+     * @param BeanConfiguration $configuration
+     * @return mixed
+     */
+    protected function createBean(BeanConfiguration $configuration) {
+        $reflector = new \ReflectionClass($configuration->getClass());
+        return $reflector->newInstanceArgs($configuration->getArgs());
     }
 
 }

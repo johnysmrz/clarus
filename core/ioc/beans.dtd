@@ -1,9 +1,17 @@
-<!ELEMENT beans (bean+)>
-<!ELEMENT bean (constructor-arg*)>
-<!ATTLIST bean id ID #REQUIRED>
-<!ATTLIST bean class CDATA #REQUIRED>
-<!ELEMENT constructor-arg (ref?)>
-<!ATTLIST constructor-arg index CDATA #IMPLIED>
-<!ATTLIST constructor-arg value CDATA #REQUIRED>
-<!ELEMENT ref ANY>
-<!ATTLIST ref bean CDATA #REQUIRED>
+<!ELEMENT beans (bean*)>
+<!ELEMENT bean (constructor-arg*,peel*)>
+<!ATTLIST bean 
+    id      ID      #REQUIRED
+    class   CDATA   #REQUIRED
+>
+<!ELEMENT constructor-arg EMPTY>
+<!ATTLIST constructor-arg
+    index   CDATA   #IMPLIED
+    value   CDATA   #REQUIRED
+    type    (int|str|float) #IMPLIED
+>
+<!ELEMENT peel (constructor-arg*)>
+<!ATTLIST peel
+    for     CDATA   #REQUIRED
+    class   CDATA   #IMPLIED
+>
