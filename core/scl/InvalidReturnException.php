@@ -2,6 +2,6 @@
 
 namespace clarus\scl;
 
-class InvalidReturnException extends \clarus\Exception {
+class InvalidReturnException extends Exception {
     
 }
