@@ -3,12 +3,11 @@
 namespace clarus\scl;
 
 /**
- * Helper class
- * Is throwen when some php error ocures
+ * Basic SCL Exception
  * @author Jan Smrz
  * @package clarus
  * @subpackage scl
  */
-class ErrorException extends Exception {
+class Exception extends \clarus\Exception {
     
 }
