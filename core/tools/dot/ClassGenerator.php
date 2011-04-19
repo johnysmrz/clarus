@@ -13,17 +13,14 @@ class ClassGenerator {
     protected $colorPool = array(
         '#FF0000', //red
         '#FF0000', //maroon
-        '#FFFF00', //yellow
         '#808000', //olive
         '#00FF00', //lime
         '#008000', //green
-        '#00FFFF', //aqua
         '#008080', //teal
         '#0000FF', //blue
         '#000080', //navy
         '#FF00FF', //fuchsia
         '#800080', //purple
-        '#FFE4C4', //bisque
         '#A52A2A', //bown
         '#5F9EA0', //cadet blue
         '#DC143C', //crimson
