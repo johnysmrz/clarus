@@ -3,7 +3,7 @@
 namespace clarus\ioc;
 
 /**
- * Reads configuration from given xml and create internal BeanConfiguration objects
+ * Reads configuration from given xml and create internal Configuration objects
  * @author Jan Smrz
  * @package clarus
  * @subpackage ioc
@@ -30,7 +30,21 @@ class Configurator {
 
         foreach ($beans as $bean) {
             $beanAttributes = $this->attributesToArr($bean->attributes());
-            $beanConfigurator = new BeanConfiguration($beanAttributes['id'], $beanAttributes['class']);
+            if (isset($beanAttributes['behaviour'])) {
+                switch ($beanAttributes['behaviour']) {
+                    case 'new':
+                        $behaviour = Configuration::BEHAVIOUR_NEW;
+                        break;
+                    case 'shared':
+                        $behaviour = Configuration::BEHAVIOUR_SHARED;
+                    case 'persistent':
+                        $behaviour = Configuration::BEHAVIOUR_PERSISTENT;
+                        break;
+                    default:
+                        throw new Exception(_('Unknown behaviour, should be one of: new, shared, persistent'));
+                }
+            }
+            $beanConfigurator = new Configuration($beanAttributes['id'], $beanAttributes['class']);
             $this->readConstrucorArgs($bean, $beanConfigurator);
             $this->readPeels($bean);
             $this->beans[] = $beanConfigurator;
@@ -48,7 +62,7 @@ class Configurator {
             if ((string) $key == 'peel') {
                 $peelAttributes = $this->attributesToArr($value->attributes());
                 $peelClass = isset($peelAttributes['class']) ? $peelAttributes['class'] : $beanAttributes['class'];
-                $peelConfigurator = new BeanConfiguration($beanAttributes['id'], $peelClass);
+                $peelConfigurator = new Configuration($beanAttributes['id'], $peelClass);
                 $this->readConstrucorArgs($value, $peelConfigurator);
                 foreach (\explode(';', $peelAttributes['for']) as $forClass) {
                     $peelConfigurator->addFor($forClass);
@@ -61,9 +75,9 @@ class Configurator {
     /**
      * Read constructor-arg elements from bean section
      * @param \SimpleXMLElement $bean
-     * @param BeanConfiguration $beanConfigurator
+     * @param Configuration $beanConfigurator
      */
-    protected function readConstrucorArgs(\SimpleXMLElement $bean, BeanConfiguration $beanConfigurator) {
+    protected function readConstrucorArgs(\SimpleXMLElement $bean, Configuration $beanConfigurator) {
         foreach ($bean->children() as $key => $value) {
             if ((string) $key == 'constructor-arg') {
                 $arg = $this->attributesToArr($value->attributes());
@@ -102,12 +116,12 @@ class Configurator {
     }
 
     /**
-     * Search configurator for BeanConfiguration by given beanName and Object
+     * Search configurator for Configuration by given beanName and Object
      * When fails, thwows \InvalidArgumentException
      * @throws \InvalidArgumentException
      * @param string $beanName
      * @param object $object
-     * @return BeanConfiguration
+     * @return Configuration
      */
     public function getConfiguration($beanName, $object) {
         foreach ($this->beans as $key => $value) {
@@ -116,15 +130,15 @@ class Configurator {
                     return $value;
                 } else {
                     foreach ($this->getClassLineage($object) as $ancester) {
-                        $ancester = '\\'.$ancester;
+                        $ancester = '\\' . $ancester;
                         foreach ($value->getFor() as $for) {
-                            if(($wildCharPost = \strpos($for, '*')) !== \FALSE) {
+                            if (($wildCharPost = \strpos($for, '*')) !== \FALSE) {
                                 $forPart = \substr($for, 0, $wildCharPost);
-                                if(\strpos($ancester, $forPart) === 0) {
+                                if (\strpos($ancester, $forPart) === 0) {
                                     return $value;
                                 }
                             } else {
-                                if($for == $ancester) {
+                                if ($for == $ancester) {
                                     return $value;
                                 }
                             }

@@ -9,23 +9,36 @@ namespace clarus\ioc;
  * @package clarus
  * @subpackage ioc
  */
-class BeanConfiguration {
+class Configuration {
+
+    const BEHAVIOUR_NEW = 1;
+    const BEHAVIOUR_SHARED = 2;
+    const BEHAVIOUR_PERSISTENT = 3;
 
     protected $id = NULL;
     protected $class = NULL;
     protected $args = array();
     protected $for = NULL;
+    protected $behaviour = 'shared';
 
     /**
      * @param string $id
      * @param string $class
      */
-    public function __construct($id, $class) {
+    public function __construct($id, $class, $behaviour = self::BEHAVIOUR_SHARED) {
+        $this->behaviour = $behaviour;
         $this->id = $id;
         $this->class = $class;
     }
 
     /**
+     * @return int
+     */
+    public function getBehaviour() {
+        return $this->behaviour;
+    }
+
+        /**
      * @return string
      */
     public function getId() {
