@@ -15,3 +15,7 @@ if(!(defined('PHP_VERSION_ID') && PHP_VERSION_ID > 50300)) {
 include_once('loader/Loader.php');
 include_once('loader/Core.php');
 new clarus\loader\Core();
+
+$errorHandler = new \clarus\scl\ErrorHandler();
+
+set_error_handler(array($errorHandler,'handlePHPError'));
