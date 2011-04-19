@@ -2,7 +2,7 @@
 
 namespace clarus;
 
-class View implements IDisplayable {
+class View implements IDisplayable, ioc\IInjectable {
 
     private static $instance = null;
     protected $variables = array();
