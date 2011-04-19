@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans SYSTEM "beans.dtd">
 <beans>
-    <bean id="connection" class="\PDO">
+    <bean id="CloDB" class="\PDO" behaviour="persistent">
         <constructor-arg value="pgsqlsss:dbname=test;host=127.0.0.1" />
         <constructor-arg value="postgres" />
         <constructor-arg value="pass" />
-        <peel for="\clarus\clo\*" class="\PDO">
-            <constructor-arg value="pgsql:dbname=test;host=127.0.0.1" />
-            <constructor-arg value="postgres" />
-            <constructor-arg value="pass" />
-        </peel>
-        <peel for="\clarus\clo\Clo" class="\PDO">
-            <constructor-arg value="pgsql:dbname=app;host=127.0.0.1" />
-            <constructor-arg value="postgres" />
-            <constructor-arg value="pass" />
-        </peel>
     </bean>
     <bean id="logger" class="\clarus\logger">
 
+    </bean>
+    <bean id="cacheprovider" class="clarus\cache\FileProvider" behaviour="shared">
     </bean>
 </beans>
