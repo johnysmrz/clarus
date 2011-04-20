@@ -31,7 +31,6 @@ class Container extends \clarus\scl\SingletonObject {
      * @return IInjectable 
      */
     public static function inject(IInjectable $object) {
-        $i = self::getInstance();
         $objReflector = new \ReflectionClass($object);
         foreach ($objReflector->getProperties() as $propertyReflector) {
             $instance = self::getInstance();
@@ -99,8 +98,10 @@ class Container extends \clarus\scl\SingletonObject {
      * @return mixed
      */
     protected function createBean(Configuration $configuration) {
-        $reflector = new \ReflectionClass($configuration->getClass());
-        return $reflector->newInstanceArgs($configuration->getArgs());
+        return function()use($configuration) {
+            $reflector = new \ReflectionClass($configuration->getClass());
+            return $reflector->newInstanceArgs($configuration->getArgs());
+        };
     }
 
 }
