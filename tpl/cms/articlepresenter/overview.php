@@ -7,10 +7,9 @@
     </tr>
     {foreach from=$articles key=$key value=$value}
         <tr>
-            <td><?php echo $value->getTitle() ?></td>
-            <td><?php echo $value->getPerex() ?></td>
-            <td>{$value>getTitle()}</td>
-            <td><a href="/admin/article/edit/<?php echo $key ?>">{_ edit}</a></td>
+            <td>{$value>name}</td>
+            <td>{$value>perex}</td>
+            <td><a href="/admin/article/edit/{$value>id}">{_ edit}</a></td>
         </tr>
     {/foreach}
 </table>
