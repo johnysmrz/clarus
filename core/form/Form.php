@@ -8,7 +8,7 @@ namespace clarus\form;
  * @package clarus
  * @subpackage form
  */
-class Form implements \clarus\IDisplayable {
+class Form implements \clarus\IDisplayable, \clarus\ioc\IInjectable {
 
     protected $name = NULL;
     protected $items = array();
@@ -29,11 +29,13 @@ class Form implements \clarus\IDisplayable {
 
     /**
      * Prida polozku do formulare
-     * @param form_Item $item
+     * @param Item $item
+     * @return Item
      */
     public function addItem(Item $item) {
         $this->items[$item->getName()] = $item;
         $item->setForm($this);
+        return $item;
     }
 
     /**

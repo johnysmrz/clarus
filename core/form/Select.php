@@ -2,7 +2,7 @@
 
 namespace clarus\form;
 
-class Select extends Item {
+class Select extends Item implements \clarus\ioc\IInjectable {
 
     protected $selectOptions = array();
 
