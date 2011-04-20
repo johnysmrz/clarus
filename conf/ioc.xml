@@ -9,6 +9,6 @@
     <bean id="logger" class="\clarus\logger">
 
     </bean>
-    <bean id="cacheprovider" class="clarus\cache\FileProvider" behaviour="shared">
+    <bean id="cacheprovider" class="clarus\cache\ApcProvider" behaviour="shared">
     </bean>
 </beans>

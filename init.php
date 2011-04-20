@@ -24,6 +24,8 @@ define('PATH_CONF', PATH . $ini['enviroment']['conf_path']);
 define('FORM_PREFIX', $ini['enviroment']['form_prefix']);
 define('URL', $ini['enviroment']['base_url']);
 
+define('DEBUG', $ini['enviroment']['debug'] == 'TRUE' ? TRUE : FALSE);
+
 define('DEFAULT_LOCALE', $ini['enviroment']['default_locale']);
 
 // podpora pro gettext
