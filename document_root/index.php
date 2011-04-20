@@ -7,9 +7,9 @@ include_once('../core/_loader.php');
 include_once('../cms/_loader.php');
 
 try {
-    Application::setConnection(new dbal\PgSql('test', 'localhost', 'postgres', 'pass'));
 
     Application::addRouote(new router\Backend('admin'));
+    Application::addRouote(new router\HomepageRouter('\\cms\\DefaultPresenter'));
 
     Application::run();
 
