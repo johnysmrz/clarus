@@ -7,7 +7,7 @@ abstract class Provider {
     /**
      * @var Cache
      */
-    private $pool = NULL;
+    private $pool = array();
 
     abstract protected function loadContainer($namespace);
 
@@ -42,8 +42,10 @@ abstract class Provider {
     }
 
     final public function __destruct() {
-        foreach ($this->pool as $namespace => $pool) {
-            $this->saveContainer($namespace, \serialize($pool));
+        if (\is_array($this->pool)) {
+            foreach ($this->pool as $namespace => $pool) {
+                $this->saveContainer($namespace, \serialize($pool));
+            }
         }
     }
 
