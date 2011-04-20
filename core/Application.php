@@ -17,7 +17,6 @@ class Application {
     protected static $locale = NULL;
     protected static $connectors = array();
     protected static $httpResponseCode = NULL;
-
     /**
      * @var IErrorPresenter
      */
@@ -34,7 +33,8 @@ class Application {
             $presenter = self::$presenter = $router->getPresenter();
             $action = self::$action = $router->getAction();
             $param = self::$param = $router->getParam();
-        } else if(self::$errorPresenter instanceof presenter\IErrorPresenter) {
+            \var_dump($presenter, $action, $param);
+        } else if (self::$errorPresenter instanceof presenter\IErrorPresenter) {
             $presenter = self::$errorPresenter;
             $action = '404';
         } else {
@@ -59,6 +59,11 @@ class Application {
      * @return router_Router
      */
     private static function getRouter() {
+        if (\defined('DEBUG') && DEBUG) {
+            foreach (self::$router as $router) {
+                \FB::info(($router->match() ? 'MATCH' : 'NOT MATCH').' router ' . \get_class($router));
+            }
+        }
         foreach (self::$router as $router) {
             if ($router->match())
                 return $router;
@@ -139,7 +144,7 @@ class Application {
     }
 
     public static function flushDefaultErrorPage() {
-        ?>
+?>
         <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
         <html><head>
                 <title><?php echo self::$httpResponseCode ?></title>
@@ -147,10 +152,10 @@ class Application {
                 <h1><?php echo self::$httpResponseCode ?></h1>
                 <p><?php echo _('The requested URL was not found on this server.') ?></p>
                 <hr>
-                <?php echo $_SERVER['SERVER_SIGNATURE'] ?>
+<?php echo $_SERVER['SERVER_SIGNATURE'] ?>
                 <address>Clarus Framework Application <?php echo CLARUS_VERSION ?></address>
-            </body></html>        
-        <?php
+    </body></html>
+<?php
     }
 
 }
