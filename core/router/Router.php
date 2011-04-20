@@ -11,9 +11,9 @@ namespace clarus\router;
 abstract class Router {
 
     protected $flags = NULL;
-    private $presenter = NULL;
-    private $action = NULL;
-    private $param = NULL;
+    protected $presenter = NULL;
+    protected $action = NULL;
+    protected $param = NULL;
 
     public function __construct($flags = NULL) {
         $this->flags = $flags;
@@ -22,7 +22,8 @@ abstract class Router {
     abstract public function match();
 
     final public function getPresenter() {
-        if ($this->presenter === NULL) throw new \LogicException('Presenter not defined', 1);
+        if ($this->presenter === NULL)
+            throw new \LogicException('Presenter not defined', 1);
         return $this->presenter;
     }
 
