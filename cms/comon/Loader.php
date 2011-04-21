@@ -17,12 +17,6 @@ class Loader extends \clarus\loader\Loader {
     protected function onCreate() {
         $cacheFile = \PATH_CACHE . '/cmsLoader.cache';
         $this->createCache();
-        /* if(\file_exists($cacheFile)) {
-          $this->classes = \unserialize(\file_get_contents($cacheFile));
-          } else {
-          $this->createCache();
-          \file_put_contents($cacheFile, \serialize($this->classes));
-          } */
     }
 
     protected function createCache() {

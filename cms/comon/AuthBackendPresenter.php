@@ -2,7 +2,12 @@
 
 namespace cms;
 
-class AuthPresenter extends \clarus\presenter\Presenter {
+/**
+ * Authorisation presenter
+ * @author Jan Smrz
+ * @package cms
+ */
+class AuthBackendPresenter extends \clarus\presenter\Presenter {
 
     protected function _initialize() {
         \clarus\View::getInstance()->setLayoutTpl(PATH_TPL . '/backend/@loginLayout.php');
@@ -35,8 +40,11 @@ class AuthPresenter extends \clarus\presenter\Presenter {
 
     protected function createForm() {
         $form = new \clarus\form\Form('login', 'post');
-        $form->addItem(new \clarus\form\Text('username', array(\clarus\form\Item::LABEL => _('username'))));
-        $form->addItem(new \clarus\form\Password('password', array(\clarus\form\Item::LABEL => _('password'))));
+        $form->addItem(new \clarus\form\Text('username', array(\clarus\form\Item::LABEL => _('username'))))
+             ->addCheck(\clarus\form\Item::CHECK_FILLED, _('Must be filled'))
+             ->addCheck('~.{5,}~', _('Must be longer than 5 characters!'));
+        $form->addItem(new \clarus\form\Password('password', array(\clarus\form\Item::LABEL => _('password'))))
+             ->addCheck(\clarus\form\Item::CHECK_FILLED, _('Must be filled'));
         $form->addItem(new \clarus\form\Select('lang',
                 array(
                     \clarus\form\Item::SELECT_OPTIONS => array(
