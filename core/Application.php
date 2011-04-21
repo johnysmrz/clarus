@@ -33,7 +33,6 @@ class Application {
             $presenter = self::$presenter = $router->getPresenter();
             $action = self::$action = $router->getAction();
             $param = self::$param = $router->getParam();
-            \var_dump($presenter, $action, $param);
         } else if (self::$errorPresenter instanceof presenter\IErrorPresenter) {
             $presenter = self::$errorPresenter;
             $action = '404';
@@ -46,6 +45,7 @@ class Application {
             $p = new $presenter($action, $param);
             self::$httpResponseCode = self::HTTP_RESPONSE_OK;
         } else {
+            \trigger_error('Presenter class ['.$presenter.' not found', \E_USER_WARNING);
             self::$httpResponseCode = self::HTTP_RESPONSE_NOT_FOUND;
         }
     }

@@ -8,7 +8,7 @@ include_once('../cms/_loader.php');
 
 try {
 
-    Application::addRouote(new router\Backend('admin'));
+    Application::addRouote(new cms\BackendRouter('admin'));
     Application::addRouote(new router\HomepageRouter('\\cms\\DefaultPresenter'));
 
     Application::run();
