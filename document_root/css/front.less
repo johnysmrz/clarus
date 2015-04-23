@@ -1,0 +1,114 @@
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: url('/document_root/img/dark-grey-tile.png') left top repeat;
+	font-family: sans-serif;
+	line-height: 12px;
+	font-size: 12px;
+}
+
+.flexColMixin {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+#topBox {
+	flex-grow: 1;
+	color: white;
+}
+
+#bodyBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+#bodyBox > div {
+	width: 100%;
+}
+
+#midBox {
+	background-color: white;
+	height: 100px;
+	.inner {
+		.flexColMixin;
+	}
+}
+
+#botBox {
+	background-color: white;
+	height: 0px;	
+}
+
+@photoColor: rgb(135,206,235);
+@blogColor: OrangeRed;
+@craftingColor: rgb(152,251,152);
+
+#domainSelector {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	a {
+		width: 100px;
+		height: 100px;
+		background-color: white;
+		margin: 10px;
+		border-radius: 10px;
+		box-shadow: 0px 0px 12px 0px rgba(107,107,107,0.6);
+		padding: 10px;
+		cursor: pointer;
+		transition: background-color 200ms;
+		border: 1px solid white;
+	};
+	.domainPhoto {
+		border-color: @photoColor;
+		&:hover {
+			background-color: @photoColor;
+			box-shadow: 0px 0px 12px 0px @photoColor;
+		}
+	};
+	.domainBlog {
+		border-color: @blogColor;
+		&:hover {
+			background-color: @blogColor;
+			box-shadow: 0px 0px 12px 0px @blogColor;
+		}	
+	};
+	.domainCrafting {
+		border-color: @craftingColor;
+		&:hover {
+			background-color: @craftingColor;
+			box-shadow: 0px 0px 12px 0px @craftingColor;
+		}	
+	}
+}
+
+#foto {
+	background: url('/document_root/img/jansmrz.png') left top no-repeat;
+	width: 150px;
+	height: 150px;
+	border-radius: 75px;
+	margin: -75px auto;
+	box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
