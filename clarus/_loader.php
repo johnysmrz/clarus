@@ -14,7 +14,10 @@ if(!(defined('\PHP_VERSION_ID') && \PHP_VERSION_ID > 50400)) {
 // PSR-4 autoloader
 spl_autoload_register(function ($class) {
 	$cp = implode(\DIRECTORY_SEPARATOR, explode('\\', $class));
-	require_once(getcwd().\DIRECTORY_SEPARATOR.$cp.'.php');
+	$file = getcwd().\DIRECTORY_SEPARATOR.$cp.'.php';
+	if(file_exists($file)) {
+		require_once($file);
+	}
 });
 
 $clarus = new Clarus();

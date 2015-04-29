@@ -7,8 +7,8 @@ namespace clarus\router;
  */
 abstract class Router {
 
-    protected $controller = NULL;
-    protected $action = NULL;
+    protected $controller = 'Default';
+    protected $method = 'defaultMethod';
 
     /**
      * @return boolean
@@ -19,8 +19,8 @@ abstract class Router {
         return $this->controller;
     }
 
-    public function getAction() {
-        return $this->action;
+    public function getMethod() {
+        return $this->method;
     }
 
 }
