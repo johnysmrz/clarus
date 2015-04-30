@@ -4,13 +4,14 @@ namespace claruscms\controller;
 
 use clarus\response\json\Ok as JsonOk;
 use clarus\response\html\Ok as HtmlOk;
+use clarus\templater\CXL as CXL;
 
 class Test extends \clarus\controller\Controller {
 
 	protected $templater = NULL;
 
 	public function init() {
-		$this->templater = new \clarus\templater\XML(file_get_contents('tpl/index.xml'));
+		$this->templater = new CXL(file_get_contents('tpl/index.xml'));
 	}
 
 	public function defaultMethod($request) {

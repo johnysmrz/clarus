@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns:html="http://www.w3.org/1999/xhtml">
-	<html:header id="header">
-		<html:title><variable name="title" default="Title!" /></html:title>
-	</html:header>
-	<html:body>
-		<block id="main.header">
-			<html:h1>Hello!</html:h1>
-			<html:div style="border: 1px solid red"></html:div>
-		</block>
-	</html:body>
-</document>
+<layout xmlns:cxl="internal">
+	
+	<cxl:block id="root" name="head">
+		<head>
+			<title>Hello</title>
+		</head>
+	</cxl:block>
+
+	<cxl:block name="body">
+		<body>
+			<h1>Heading 1</h1>
+		</body>
+	</cxl:block>
+	
+</layout>
