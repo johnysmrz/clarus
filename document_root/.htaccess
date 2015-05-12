@@ -1,0 +1,7 @@
+<ifModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^js\/.+|^css\/.+|^img\/.+ - [L]
+	RewriteRule \.html$ - [L]
+	RewriteRule .+ index.php
+</ifModule>

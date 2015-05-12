@@ -1,0 +1,168 @@
+html {
+	scroll: hidden;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: url('../img/dark-grey-tile.png') left top repeat;
+	font-family: sans-serif;
+	line-height: 12px;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.flexColMixin {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+#topBox {
+	color: white;
+	> .inner {
+		display: flex;
+		> * {
+			margin: 10px auto;
+			text-align: center;
+		};
+		h1 {
+			font-size: 45px;
+			line-height: 30px;
+		}
+	}
+}
+
+#bodyBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+#bodyBox > div {
+	width: 100%;
+}
+
+#midBox {
+	background-color: white;
+	.inner {
+		.flexColMixin;
+	}
+	#foto {
+		transition: transform 200ms;
+	}
+	&.__expanded #foto {
+		transform: translate(0px, 30px) scale(0.5);
+	}
+}
+
+#midBox, #topBox {
+	overflow: visible !important;
+}
+
+#botBox {
+	background-color: white;
+	height: 0px;
+}
+
+#aboutMe {
+	display: none;
+	margin: 20px;
+	text-align: justify;
+	-moz-column-count: 3;
+	-moz-column-gap: 10px;
+	-webkit-column-count: 3;
+	-webkit-column-gap: 10px;
+	column-count: 3;
+	column-gap: 10px;
+	max-width: 1200px;
+	> h2 {
+		font-size: 20px;
+		line-height: 20px;
+		margin: 10px 0 50px;
+		padding: 0;
+	}
+}
+
+@photoColor: DodgerBlue;
+@blogColor: Tomato;
+@craftingColor: YellowGreen;
+
+@saturatePower: 50%;
+
+#domainSelector {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	a {
+		background-color: white;
+		border-radius: 10px;
+		box-shadow: 0 0 12px 0 rgba(107, 107, 107, 0.6);
+		color: black;
+		cursor: pointer;
+		font-size: 20px;
+		font-weight: bold;
+		height: 100px;
+		line-height: 90px;
+		margin: 10px;
+		padding: 10px;
+		text-decoration: none;
+		transition: background-color 500ms ease 0s;
+		width: 100px;
+		border: 1px solid black;
+	};
+	.domainPhoto {
+		background-color: desaturate(@photoColor, @saturatePower);
+		border-color: @photoColor;
+		&:hover {
+			background-color: @photoColor;
+			box-shadow: 0px 0px 12px 0px @photoColor;
+		}
+	};
+	.domainBlog {
+		background-color: desaturate(@blogColor, @saturatePower);
+		border-color: @blogColor;
+		&:hover {
+			background-color: @blogColor;
+			box-shadow: 0px 0px 12px 0px @blogColor;
+		}	
+	};
+	.domainCrafting {
+		background-color: desaturate(@craftingColor, @saturatePower);
+		border-color: @craftingColor;
+		&:hover {
+			background-color: @craftingColor;
+			box-shadow: 0px 0px 12px 0px @craftingColor;
+		}	
+	}
+}
+
+#foto {
+	background: url('../img/jansmrz.png') left top no-repeat;
+	width: 150px;
+	height: 150px;
+	border-radius: 75px;
+	margin: -75px auto;
+	box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+	cursor: pointer;
+	z-index: 50;
+}
+
+
+
+
+
+
+
+
+
+
+

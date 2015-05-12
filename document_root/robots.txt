@@ -1,0 +1,4 @@
+User-agent: *
+
+sitemap: http://dev.jan-smrz.cz/sitemap.xml
+
