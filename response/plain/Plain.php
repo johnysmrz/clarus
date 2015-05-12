@@ -11,7 +11,15 @@ abstract class Plain extends Response {
 	}
 
 	public function getOutput() {
-		return var_dump($this->container);
+		ob_start();
+		foreach ($this->container as $value) {
+			if(is_array($value)) {
+				var_dump($value);
+			} else {
+				echo $value;
+			}
+		}
+		return ob_get_clean();
 	}
 	
 }

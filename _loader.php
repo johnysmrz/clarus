@@ -20,4 +20,25 @@ spl_autoload_register(function ($class) {
 	}
 });
 
+// custom error handler
+set_error_handler(function($errno, $errstr, $errfile, $errline){
+	switch ($errno) {
+		case \E_RECOVERABLE_ERROR:
+			throw new error\RecoverableError($errstr);
+			break;
+		case \E_USER_ERROR:
+			throw new error\UserNotice($errstr);
+			break;
+		case \E_USER_WARNING:
+			throw new error\UserNotice($errstr);
+			break;
+		case \E_USER_NOTICE:
+			throw new error\UserNotice($errstr);
+			break;
+		default:
+			throw new \Exception($errstr, 1);
+			break;
+	}
+});
+
 $clarus = new Clarus();

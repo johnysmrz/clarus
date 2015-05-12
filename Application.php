@@ -22,8 +22,8 @@ class Application {
 
 	protected function __construct() {
 		// register internall request options
-		$this->registerRequest(['application/json'], '\\' . __NAMESPACE__ . '\request\Json');
-		$this->registerRequest(['application/xml','text/xml'], '\\' . __NAMESPACE__ . '\request\Xml');
+		$this->registerRequest(['application/json'], sprintf('\\%s\\%s', __NAMESPACE__, 'request\Json'));
+		$this->registerRequest(['application/xml','text/xml'], sprintf('\\%s\\%s', __NAMESPACE__, 'request\Xml'));
 	}
 
 	public function run() {
