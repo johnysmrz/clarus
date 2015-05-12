@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans SYSTEM "beans.dtd">
+<beans>
+    <bean id="CloDB" class="\PDO" behaviour="persistent">
+        <constructor-arg value="pgsqlsss:dbname=test;host=127.0.0.1" />
+        <constructor-arg value="postgres" />
+        <constructor-arg value="pass" />
+    </bean>
+    <bean id="logger" class="\clarus\logger">
+
+    </bean>
+    <bean id="cacheprovider" class="clarus\cache\ApcProvider" behaviour="shared">
+    </bean>
+</beans>

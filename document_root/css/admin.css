@@ -1,0 +1,276 @@
+* {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+#mainBox {
+    width: 1000px;
+    margin: 0px auto 0px auto;
+    padding: 0px;
+}
+
+#menuBox {
+    width: 250px;
+    float: left;
+}
+
+#contentBox {
+    width: 750px;
+    margin: 0px 0px 0px 252px;
+    min-height: 300px;
+    padding: 5px 0px 0px 5px;
+}
+
+#contentBox > div.inner {
+    -moz-border-radius: 10px;
+    border: 1px solid #b3b3b4;
+    padding: 5px;
+    background-color: #f5f5f4;
+}
+
+.gradient {
+    background: #D9D8DA; /* old browsers */
+    background: -moz-linear-gradient(top, #D9D8DA 0%, #F5F5F4 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#D9D8DA), color-stop(100%,#F5F5F4)); /* webkit */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D9D8DA', endColorstr='#F5F5F4',GradientType=0 ); /* ie */
+}
+
+/* --- top box --- */
+
+#topBox {
+    height: 45px;
+    background: url("/img/admin/top-bg.png") repeat-x;
+}
+
+#topBox > div.inner {
+    height: 45px;
+    margin: 0px auto 0px auto;
+    width: 1000px;
+}
+
+#userInfoBox {
+    padding: 15px 0px;
+    font-size: 70%;
+    width: 250px;
+    color: white;
+}
+
+#userInfoBox > a, #userInfoBox > a:hover {
+    color: white;
+    font-weight: bold;
+    font-size: 80%;
+}
+
+/* --- search box --- */
+
+#searchBox {
+    height: 25px;
+    padding: 9px 0px 10px 0px;
+    float: right;
+}
+
+#searchText {
+    border: 1px solid #800000;
+    margin: 0px;
+    padding: 3px 50px 3px 3px;
+    width: 180px;
+    height: 15px;
+    -moz-border-radius: 8px;
+    text-align: right;
+    background: white url("/img/admin/search-bg.png") top right no-repeat;
+}
+
+/* --- main menu --- */
+
+ul#mainMenu, ul#mainMenu ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul#mainMenu li {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* prvni uroven */
+
+ul#mainMenu > li > a.tree {
+    background:
+        url("/img/admin/tree-main.png") 10px 5px no-repeat,
+        -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
+}
+
+ul#mainMenu > li > a.users {
+    background:
+        url("/img/admin/users-main.png") 10px 2px no-repeat,
+        -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
+}
+
+ul#mainMenu > li > a.book {
+    background:
+        url("/img/admin/book-main.png") 10px 0px no-repeat,
+        -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
+}
+
+ul#mainMenu > li > a.settings {
+    background:
+        url("/img/admin/settings-main.png") 10px 3px no-repeat,
+        -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
+}
+
+ul#mainMenu > li > a {
+    border: 1px solid #b3b3b4;
+    display: block;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    height: 45px;
+    padding: 5px 5px 5px 70px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+    background: -moz-linear-gradient(100% 100% 90deg, #d9d8da, #f5f5f4);
+    margin-top: 5px;
+}
+
+ul#mainMenu > li > a:hover {
+    border: 1px solid #868686;
+}
+
+ul#mainMenu > li > a > span {
+    margin: 1px 0px 0px 4px;
+    display: block;
+    font-size: 11px;
+    color: #656565;
+    font-weight: normal;
+    font-style: italic;
+    overflow: hidden;
+}
+
+/* druha uroven */
+
+ul#mainMenu > li > ul > li {
+    margin: 0px 7px 0px 7px;
+    display: none;
+}
+
+ul#mainMenu > li > ul > li > a {
+    border-left: 1px solid #b3b3b4;
+    border-right: 1px solid #b3b3b4;
+    border-bottom: 1px solid #b3b3b4;
+    background-color: #d9d8da;
+    display: block;
+    height: 35px;
+    padding: 5px 5px 5px 63px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+ul#mainMenu > li > ul > li > a:hover {
+    border-color: #868686;
+}
+
+ul#mainMenu > li > ul > li > a > span {
+    margin: 1px 0px 0px 4px;
+    display: block;
+    font-size: 11px;
+    color: #656565;
+    font-weight: normal;
+    font-style: italic;
+    overflow: hidden;
+}
+
+/* login stranka */
+
+#loginBox {
+    border: 1px solid #b3b3b4;
+    -moz-border-radius: 10px;
+    margin: 150px auto 0px auto;
+    width: 320px;
+    padding: 10px;
+}
+
+#loginClarusLogo {
+    margin: 5px 85px 10px 85px;
+}
+
+/* univerzalni prvky */
+
+table.basic-overview {
+    border: 1px solid #B3B3B4;
+    margin: 10px auto 10px 10px;
+    min-width: 400px;
+}
+
+table.basic-overview > tbody > tr > th {
+    background: url("/img/admin/top-bg.png") repeat-x bottom left transparent;
+    color: white;
+    margin: 0;
+    padding: 7px 10px;
+}
+
+
+
+table.basic-overview > tbody > tr > td {
+    padding: 7px 10px;
+    margin: 0px;
+}
+
+table.basic-overview > tbody > tr:nth-child(even) > td {
+    background-color: #d9d8da;
+}
+
+table.basic-overview > tbody > tr:hover > td {
+    background-color: #cfdaa5;
+}
+
+/* tabulka s kulatymi rohy 10px */
+
+table.round-table10 {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+table.round-table10 > tbody > tr:first-child > th:first-child, table.round-table10 > tbody > tr:first-child > td:first-child {
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-left-radius: 10px;
+}
+
+table.round-table10 > tbody > tr:first-child > th:last-child, table.round-table10 > tbody > tr:first-child > td:last-child {
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-right-radius: 10px;
+}
+
+table.round-table10 > tbody > tr:last-child > td:last-child {
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+table.round-table10 > tbody > tr:last-child > td:first-child {
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+ul.failMessages {
+    margin: 0px 10px;
+    padding: 0px;
+    color: firebrick;
+    list-style: none;
+}
+
+ul.failMessages > li {
+    font-size: 12px;
+    font-weight: bold;
+}
