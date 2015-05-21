@@ -51,9 +51,8 @@ class Application {
 					return new $cls();
 				}
 			}
-		} else {
-			return new request\NoType();
 		}
+		return new request\NoType();
 	}
 
 	protected function callRouter(router\Router $router) {
