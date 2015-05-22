@@ -3,11 +3,20 @@
 namespace clarus\service;
 
 class Service implements \ArrayAccess {
-	
+
+    /**
+     * @var Service|null
+     */
 	protected static $instance = NULL;
 
+    /**
+     * @var array
+     */
 	protected $container = array();
 
+    /**
+     * @return Service
+     */
 	public static function i() {
 		if (!(self::$instance instanceof Service)) {
 			self::$instance = new Service();
