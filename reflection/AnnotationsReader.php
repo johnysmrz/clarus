@@ -20,7 +20,7 @@ namespace clarus\reflection;
  * @package reflection
  * @throws \InvalidArgumentException
  */
-class AnnotationsReader extends \clarus\scl\SingletonObject {
+class AnnotationsReader {
 
     private static $pool = array();
     protected $annotations = array();
@@ -41,7 +41,7 @@ class AnnotationsReader extends \clarus\scl\SingletonObject {
         if (isset(self::$pool['class'][$class])) {
             return self::$pool['class'][$class];
         } else {
-            $reflector = new ReflectionClass($class);
+            $reflector = new \ReflectionClass($class);
             return self::$pool['class'][$class] = new AnnotationsReader($reflector->getDocComment());
         }
     }

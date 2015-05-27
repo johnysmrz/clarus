@@ -4,51 +4,51 @@ namespace clarus\scl;
 
 class DummyTraversable implements \ArrayAccess, \Iterator {
 
-	protected $array = array();
+	protected $container = array();
 	protected $offset = 0;
 
 	public function __construct(array $array = []) {
-		$this->array = $array;
+		$this->container = $array;
 	}
 
 	public function offsetExists($offset) {
-		return isset($this->array[$offset]);
+		return isset($this->container[$offset]);
 	}
 
 	public function offsetGet($offset) {
-		return $this->array[$offset];
+		return $this->container[$offset];
 	}
 
 	public function offsetSet($offset, $value) {
 		if($offset === NULL) {
-			$this->array[$this->offset++] = $value;
+			$this->container[$this->offset++] = $value;
 		} else {
-			$this->array[$offset] = $value;
+			$this->container[$offset] = $value;
 		}
 	}
 
 	public function offsetUnset($offset) {
-		unset($this->array[$offset]);
+		unset($this->container[$offset]);
 	}
 
 	public function current() {
-		return $this->array[$this->offset];
+		return \current($this->container);
 	}
 
 	public function key() {
-		return $this->offset;
+		return \key($this->container);
 	}
 
 	public function next() {
-		$this->offset++;
+		\next($this->container);
 	}
 
 	public function rewind() {
-		$this->offset = 0;
+		\reset($this->container);
 	}
 
 	public function valid() {
-		return isset($this->array[$this->offset]);
+		return \key($this->container) !== null;
 	}
 
 }

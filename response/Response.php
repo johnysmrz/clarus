@@ -44,4 +44,8 @@ abstract class Response implements \ArrayAccess {
 		$this->container = $arr;
 	}
 
+	public function fillIterator(\Iterator $iterator) {
+		$this->container = iterator_to_array($iterator);
+	}
+
 }
