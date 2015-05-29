@@ -79,10 +79,12 @@ class Application {
 		if($responseOverride !== NULL) {
 			$this->response = $responseOverride;
 		}
-		\header(sprintf('X-Powered-By: PHP/%s; Clarus-Framework/%s', \phpversion(), Clarus::VERSION));
 		if($this->response instanceof \clarus\response\Response) {
-			foreach ($this->response->getHeaders() as $header) {
-				\header($header);
+			if (!headers_sent()){
+				\header(sprintf('X-Powered-By: PHP/%s; Clarus-Framework/%s', \phpversion(), Clarus::VERSION));
+				foreach ($this->response->getHeaders() as $header) {
+					\header($header);
+				}
 			}
 			echo $this->response->getOutput();
 		} else {
