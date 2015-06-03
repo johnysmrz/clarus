@@ -12,7 +12,11 @@ class QueryBuilder {
 	protected $table = NULL;
 	protected $data = [];
 	protected $operation = NULL;
-	
+	protected $where = NULL;
+	protected $whereArgs = [];
+	protected $limit = NULL;
+	protected $offset = NULL;
+
 	public function __construct() {
 
 	}
@@ -29,6 +33,18 @@ class QueryBuilder {
 		return $this;
 	}
 
+	public function where($where, $args) {
+		$this->where = $where;
+		$this->whereArgs = $args;
+		return $this;
+	}
+
+	public function limit($limit, $offset) {
+		$this->limit = $limit;
+		$this->offset = $offset;
+		return $this;
+	}
+
 	public function data(array $data = []) {
 		foreach ($data as $key => $value) {
 			$this->add($key, $value, 0);
@@ -42,8 +58,8 @@ class QueryBuilder {
 	}
 
 	public function getSql() {
-		if($this->table === NULL) throw new \LogicException('No table name providet.');
-		if($this->data === NULL) throw new \LogicException('No data for builder providet.');
+		if ($this->table === NULL) throw new \LogicException('No table name providet.');
+		if ($this->data === NULL) throw new \LogicException('No data for builder providet.');
 		$rtn = '';
 		switch ($this->operation) {
 			case self::INSERT:
@@ -59,7 +75,7 @@ class QueryBuilder {
 
 		$rows = [];
 		foreach ($this->data as $v) {
-			if($v[3] == 0) {
+			if ($v[3] == 0) {
 				$rows[] = sprintf("\t%s = %s", $v[0], $v[2]);
 			} else {
 				$rows[] = sprintf("\t%s = %s", $v[0], $v[1]);
@@ -67,16 +83,27 @@ class QueryBuilder {
 		}
 
 		$rtn .= implode(",\n", $rows);
-		
+
+		if ($this->operation == self::UPDATE && $this->where !== NULL) {
+			$rtn .= sprintf("\n WHERE %s \n", $this->where);
+		}
+
+		if (is_numeric($this->limit) && is_numeric($this->offset)) {
+			$rtn .= sprintf(' LIMIT %s OFFSET %s', $this->limit, $this->offset);
+		}
+
 		return $rtn;
 	}
 
 	public function getBinds() {
 		$rtn = [];
 		foreach ($this->data as $v) {
-			if($v[3] == 0) {
+			if ($v[3] == 0) {
 				$rtn[$v[2]] = $v[1];
 			}
+		}
+		foreach ($this->whereArgs as $k => $v) {
+			$rtn[$k] = $v;
 		}
 		return $rtn;
 	}
