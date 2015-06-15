@@ -108,4 +108,8 @@ class QueryBuilder {
 		return $rtn;
 	}
 
+	public function dump() {
+		var_dump($this->getSql(), $this->getBinds());
+	}
+
 }
