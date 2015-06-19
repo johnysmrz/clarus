@@ -2,6 +2,6 @@
 
 namespace clarus\request;
 
-class Exception extends \Exception {
+class Exception extends \clarus\Exception {
 	
 }

@@ -2,6 +2,6 @@
 
 namespace clarus\scl;
 
-class NotImplementedException extends Exception {
+class NotImplementedException extends \clarus\Exception {
     
 }
