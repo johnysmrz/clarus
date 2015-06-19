@@ -10,11 +10,13 @@ abstract class Html extends Response {
 
 	public function __construct($templater) {
 		$this->templater = $templater;
-		$this->setHeader(sprintf('%s: %s', Response::CONTENT_TYPE, 'text/plain; charset=utf-8'));
+		$this->setHeader(sprintf('%s: %s', Response::CONTENT_TYPE, 'text/html; charset=utf-8'));
 	}
 
 	public function getOutput() {
-		echo $this->templater->createHtmlDocument($this->container);
+		//echo $this->templater->createHtmlDocument($this->container);
+		return '';
+		return $this->container;
 	}
 	
 }
