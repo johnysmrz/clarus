@@ -8,7 +8,7 @@ abstract class Response implements \ArrayAccess {
 
 	protected $headers = [];
 
-	protected $container = array();
+	protected $container = [];
 
 	/**
 	 * Set header for current request
@@ -18,7 +18,6 @@ abstract class Response implements \ArrayAccess {
 	public function setHeader($string) {
 		$this->headers[] = $string;
 	}
-
 
 	/**
 	 * Return current set of headers
@@ -34,11 +33,11 @@ abstract class Response implements \ArrayAccess {
 	 * @param $filler
 	 */
 	public function fill($filler) {
-		if(is_array($filler) || $filler instanceof \ArrayAccess) {
+		if (is_array($filler) || $filler instanceof \ArrayAccess) {
 			$this->container = $filler;
-		} else if($filler instanceof \Iterator) {
+		} else if ($filler instanceof \Iterator) {
 			$this->fillIterator($filler);
-		} else if($filler instanceof \JsonSerializable) {
+		} else if ($filler instanceof \JsonSerializable) {
 			$this->container = $filler;
 		} else {
 			throw new \UnexpectedValueException('Filler must be on of: array|ArrayAccess|Iterator|JsonSerializable');

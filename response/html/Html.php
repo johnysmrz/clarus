@@ -16,7 +16,7 @@ abstract class Html extends Response {
 	public function getOutput() {
 		//echo $this->templater->createHtmlDocument($this->container);
 		return '';
-		return $this->container;
+		//return $this->container;
 	}
 	
 }
