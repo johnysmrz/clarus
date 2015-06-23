@@ -1,6 +1,7 @@
 <?php
 
 namespace clarus;
+
 use clarus\observer\Event;
 
 /**
@@ -22,7 +23,7 @@ class Application {
 	 * @return Application
 	 */
 	public static function i() {
-		if(!(self::$instance instanceof Application)) {
+		if (!(self::$instance instanceof Application)) {
 			self::$instance = new Application();
 		}
 		return self::$instance;
@@ -31,7 +32,7 @@ class Application {
 	protected function __construct() {
 		// register internall request options
 		$this->registerRequest(['application/json'], sprintf('\\%s\\%s', __NAMESPACE__, 'request\Json'));
-		$this->registerRequest(['application/xml','text/xml'], sprintf('\\%s\\%s', __NAMESPACE__, 'request\Xml'));
+		$this->registerRequest(['application/xml', 'text/xml'], sprintf('\\%s\\%s', __NAMESPACE__, 'request\Xml'));
 	}
 
 	/**
@@ -52,7 +53,8 @@ class Application {
 		} finally {
 			$this->invokeObservers(new observer\Event('clarus.application.afterRun', [
 				'response' => $this->response,
-				'request' => $this->createRequest()
+				'request' => $this->createRequest(),
+				'exception' => isset($e) ? $e : NULL
 			]));
 		}
 	}
@@ -62,9 +64,7 @@ class Application {
 	 */
 	protected function getValidRouter() {
 		foreach ($this->routers as $router) {
-			if($router->match()) {
-				return $router;
-			}
+			if ($router->match()) return $router;
 		}
 	}
 
@@ -72,10 +72,10 @@ class Application {
 	 * @return request\*
 	 */
 	protected function createRequest() {
-		if(isset($_SERVER['CONTENT_TYPE'])) {
+		if (isset($_SERVER['CONTENT_TYPE'])) {
 			$r = explode(';', $_SERVER['CONTENT_TYPE']);
 			foreach ($this->requestClasses as $ct => $cls) {
-				if(isset($r[0]) && $ct == $r[0]) {
+				if (isset($r[0]) && $ct == $r[0]) {
 					return new $cls();
 				}
 			}
@@ -93,9 +93,9 @@ class Application {
 	protected function callRouter(router\Router $router) {
 		$cls = $router->getController();
 		$mtd = $router->getMethod();
-		if(class_exists($cls)) {
+		if (class_exists($cls)) {
 			$controller = new $cls();
-			if(method_exists($controller, $mtd)) {
+			if (method_exists($controller, $mtd)) {
 				$request = $this->createRequest();
 				$controller->init();
 				return $controller->$mtd($request);
@@ -118,11 +118,11 @@ class Application {
 	 * @param response\Response|NULL $responseOverride
 	 */
 	public function display(response\Response $responseOverride = NULL) {
-		if($responseOverride !== NULL) {
+		if ($responseOverride !== NULL) {
 			$this->response = $responseOverride;
 		}
-		if($this->response instanceof \clarus\response\Response) {
-			if (!headers_sent()){
+		if ($this->response instanceof \clarus\response\Response) {
+			if (!headers_sent()) {
 				\header(sprintf('X-Powered-By: PHP/%s; Clarus-Framework/%s', \phpversion(), Clarus::VERSION));
 				foreach ($this->response->getHeaders() as $header) {
 					\header($header);
@@ -150,24 +150,23 @@ class Application {
 	 * @param observer\IObserver $observer
 	 */
 	public function addObserver(array $eventNames, observer\IObserver $observer) {
-		foreach($eventNames as $ename) {
-			if(!isset($this->observers[$ename])) {
+		foreach ($eventNames as $ename) {
+			if (!isset($this->observers[$ename])) {
 				$this->observers[$ename] = [];
 			}
 			$this->observers[$ename][] = $observer;
 		}
 	}
-	
+
 	/**
 	 * Invoke all observers bound to event
 	 * @param Event $event
-	 * @return \Generator
 	 */
 	public function invokeObservers(observer\Event $event) {
-		if(isset($this->observers[$event->getEventName()])) {
-			foreach($this->observers[$event->getEventName()] as $observer) {
+		if (isset($this->observers[$event->getEventName()])) {
+			foreach ($this->observers[$event->getEventName()] as $observer) {
 				/** @var $observer observer\IObserver */
-				yield $observer($event);
+				$observer($event);
 			}
 		}
 	}
