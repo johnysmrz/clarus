@@ -127,7 +127,7 @@ class Application {
 				foreach ($this->response->getHeaders() as $header) {
 					\header($header);
 				}
-				\header('Content-Type: text/html');
+				//\header('Content-Type: text/html');
 			}
 			echo $this->response->getOutput();
 		} else {
