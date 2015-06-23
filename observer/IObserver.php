@@ -2,12 +2,16 @@
 
 namespace clarus\observer;
 
+/**
+ * Interface IObserver
+ * @package clarus\observer
+ */
 interface IObserver {
 
 	/**
-	 * @param mixed $context
-	 * @param array $payload
-	 * @return mixed
+	 * @param Event $event
+	 * @return Event
 	 */
-	public function invoke($context, $payload = []);
+	public function __invoke(Event $event);
+
 }

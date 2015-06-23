@@ -1,6 +1,7 @@
 <?php
 
 namespace clarus;
+use clarus\observer\Event;
 
 /**
  * Basic class for running application, should be called only staticaly
@@ -38,17 +39,22 @@ class Application {
 	 * @observer clarus.application.afterRun
 	 */
 	public function run() {
-		$this->invokeObservers('clarus.application.beforeRun', $this);
-		$router = $this->getValidRouter();
-		if($router instanceof router\Router) {
-			$this->response = $this->callRouter($router);
-		} else {
-			throw new \LogicException('No router found');
+		try {
+			$this->invokeObservers(new observer\Event('clarus.application.beforeRun'));
+			$router = $this->getValidRouter();
+			if ($router instanceof router\Router) {
+				$this->response = $this->callRouter($router);
+			} else {
+				throw new \LogicException('No router found');
+			}
+		} catch (\Exception $e) {
+			throw $e;
+		} finally {
+			$this->invokeObservers(new observer\Event('clarus.application.afterRun', [
+				'response' => $this->response,
+				'request' => $this->createRequest()
+			]));
 		}
-		$this->invokeObservers('clarus.application.afterRun', $this, [
-			'response' => $this->response,
-			'request' => $this->createRequest()
-		]);
 	}
 
 	/**
@@ -59,7 +65,7 @@ class Application {
 			if($router->match()) {
 				return $router;
 			}
-		}	
+		}
 	}
 
 	/**
@@ -85,7 +91,6 @@ class Application {
 	 * @observer clarus.application.beforeValidMethodCall
 	 */
 	protected function callRouter(router\Router $router) {
-		$this->invokeObservers('clarus.application.beforeCallRouter', $router);
 		$cls = $router->getController();
 		$mtd = $router->getMethod();
 		if(class_exists($cls)) {
@@ -93,10 +98,6 @@ class Application {
 			if(method_exists($controller, $mtd)) {
 				$request = $this->createRequest();
 				$controller->init();
-				$this->invokeObservers('clarus.application.beforeValidMethodCall', $request, [
-					'method' => $mtd,
-					'controller' => $controller
-				]);
 				return $controller->$mtd($request);
 			} else {
 				throw new \LogicException(sprintf('Method [%s] on controller [%s] not found!', $mtd, $cls));
@@ -156,18 +157,17 @@ class Application {
 			$this->observers[$ename][] = $observer;
 		}
 	}
-
+	
 	/**
-	 * Invoke all observer by given event name
-	 * @param string $eventName
-	 * @param mixed $context
-	 * @param array $payload
+	 * Invoke all observers bound to event
+	 * @param Event $event
+	 * @return \Generator
 	 */
-	public function invokeObservers($eventName, $context, $payload = []) {
-		if(isset($this->observers[$eventName])) {
-			foreach($this->observers[$eventName] as $observer) {
+	public function invokeObservers(observer\Event $event) {
+		if(isset($this->observers[$event->getEventName()])) {
+			foreach($this->observers[$event->getEventName()] as $observer) {
 				/** @var $observer observer\IObserver */
-				$observer->invoke($context, $payload);
+				yield $observer($event);
 			}
 		}
 	}
