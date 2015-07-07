@@ -97,7 +97,8 @@ class Application {
 			$controller = new $cls();
 			if (method_exists($controller, $mtd)) {
 				$request = $this->createRequest();
-				$controller->init();
+				$request->setRouter($router);
+				$controller->init($request);
 				return $controller->$mtd($request);
 			} else {
 				throw new \LogicException(sprintf('Method [%s] on controller [%s] not found!', $mtd, $cls));

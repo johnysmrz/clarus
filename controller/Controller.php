@@ -4,7 +4,7 @@ namespace clarus\controller;
 
 abstract class Controller {
 	
-	public function init() {
+	public function init(\clarus\request\Request $request) {
 		
 	}
 	
